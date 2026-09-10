@@ -1,25 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" content="#fbf9f4" />
-  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-touch-fullscreen" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="Daybook" />
   <meta name="description" content="A tactile, card-based daily journal saved locally on your device." />
   <title>Daybook — Tactile Card Journal</title>
-
-  <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22Daybook%20%E2%80%94%20Daily%20Card%20Journal%22%2C%22short_name%22%3A%22Daybook%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22fullscreen%22%2C%22background_color%22%3A%22%23f4efe6%22%2C%22theme_color%22%3A%22%23fbf9f4%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20512%20512%27%3E%3Crect%20width%3D%27512%27%20height%3D%27512%27%20rx%3D%27128%27%20fill%3D%27%23c35936%27%2F%3E%3Cpath%20d%3D%27M140%20120h232a24%2024%200%200%201%2024%2024v224a24%2024%200%200%201-24%2024H140a24%2024%200%200%201-24-24V144a24%2024%200%200%201%2024-24z%27%20fill%3D%27%23fbf9f4%27%2F%3E%3Cline%20x1%3D%27160%27%20y1%3D%27200%27%20x2%3D%27352%27%20y2%3D%27200%27%20stroke%3D%27%23dcd2c4%27%20stroke-width%3D%2712%27%20stroke-linecap%3D%27round%27%2F%3E%3Cline%20x1%3D%27160%27%20y1%3D%27250%27%20x2%3D%27352%27%20y2%3D%27250%27%20stroke%3D%27%23dcd2c4%27%20stroke-width%3D%2712%27%20stroke-linecap%3D%27round%27%2F%3E%3Cline%20x1%3D%27160%27%20y1%3D%27300%27%20x2%3D%27290%27%20y2%3D%27300%27%20stroke%3D%27%23dcd2c4%27%20stroke-width%3D%2712%27%20stroke-linecap%3D%27round%27%2F%3E%3C%2Fsvg%3E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D" />
-
 
   <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22Daybook%20%E2%80%94%20Daily%20Card%20Journal%22%2C%22short_name%22%3A%22Daybook%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f4efe6%22%2C%22theme_color%22%3A%22%23fbf9f4%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20512%20512%27%3E%3Crect%20width%3D%27512%27%20height%3D%27512%27%20rx%3D%27128%27%20fill%3D%27%23c35936%27%2F%3E%3Cpath%20d%3D%27M140%20120h232a24%2024%200%200%201%2024%2024v224a24%2024%200%200%201-24%2024H140a24%2024%200%200%201-24-24V144a24%2024%200%200%201%2024-24z%27%20fill%3D%27%23fbf9f4%27%2F%3E%3Cline%20x1%3D%27160%27%20y1%3D%27200%27%20x2%3D%27352%27%20y2%3D%27200%27%20stroke%3D%27%23dcd2c4%27%20stroke-width%3D%2712%27%20stroke-linecap%3D%27round%27%2F%3E%3Cline%20x1%3D%27160%27%20y1%3D%27250%27%20x2%3D%27352%27%20y2%3D%27250%27%20stroke%3D%27%23dcd2c4%27%20stroke-width%3D%2712%27%20stroke-linecap%3D%27round%27%2F%3E%3Cline%20x1%3D%27160%27%20y1%3D%27300%27%20x2%3D%27290%27%20y2%3D%27300%27%20stroke%3D%27%23dcd2c4%27%20stroke-width%3D%2712%27%20stroke-linecap%3D%27round%27%2F%3E%3C%2Fsvg%3E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D" />
   <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='128' fill='%23c35936'/%3E%3Cpath d='M140 120h232a24 24 0 0 1 24 24v224a24 24 0 0 1-24 24H140a24 24 0 0 1-24-24V144a24 24 0 0 1 24-24z' fill='%23fbf9f4'/%3E%3C/svg%3E" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -40,13 +36,68 @@
       --font-serif: 'Lora', Georgia, serif;
       --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
+      --font-hand: 'Caveat', cursive;
+      --journal-font: var(--font-serif);
+      --journal-size: 17px;
+      --journal-line-height: 34px;
+    }
+
+    [data-theme="dark"] {
+      --bg-canvas: #1c1917;
+      --bg-card: #282523;
+      --border-card: #443f3b;
+      --border-stack: #383431;
+      --text-main: #f5f4f2;
+      --text-muted: #a8a29c;
+      --text-dim: #78716b;
+      --terracotta: #e07a5f;
+      --terracotta-hover: #ec8a70;
+      --terracotta-light: #382823;
+      --ruled-line: #383430;
+      --ruled-red: rgba(224, 122, 95, 0.35);
+      --shadow-card: 0 18px 36px -10px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3);
+      --shadow-stack: 0 6px 14px rgba(0, 0, 0, 0.35);
+    }
+
+    [data-theme="sage"] {
+      --bg-canvas: #edf2eb;
+      --bg-card: #f9fbf8;
+      --border-card: #d4ded1;
+      --border-stack: #c7d4c4;
+      --text-main: #1f2b21;
+      --text-muted: #5e7360;
+      --text-dim: #8b9e8c;
+      --terracotta: #457b56;
+      --terracotta-hover: #376546;
+      --terracotta-light: #e5efe7;
+      --ruled-line: #e0e9de;
+      --ruled-red: rgba(69, 123, 86, 0.3);
+      --shadow-card: 0 18px 36px -10px rgba(31, 43, 33, 0.12);
+      --shadow-stack: 0 6px 14px rgba(31, 43, 33, 0.07);
+    }
+
+    [data-theme="minimal"] {
+      --bg-canvas: #f8f9fa;
+      --bg-card: #ffffff;
+      --border-card: #e2e8f0;
+      --border-stack: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-dim: #94a3b8;
+      --terracotta: #2563eb;
+      --terracotta-hover: #1d4ed8;
+      --terracotta-light: #eff6ff;
+      --ruled-line: #edf2f7;
+      --ruled-red: rgba(37, 99, 235, 0.25);
+      --shadow-card: 0 18px 36px -10px rgba(15, 23, 42, 0.08);
+      --shadow-stack: 0 6px 14px rgba(15, 23, 42, 0.05);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
 
     body {
       background-color: var(--bg-canvas);
-      background-image: radial-gradient(#ded5c5 0.75px, transparent 0.75px);
+      background-image: radial-gradient(var(--border-stack) 0.75px, transparent 0.75px);
       background-size: 20px 20px;
       color: var(--text-main);
       font-family: var(--font-sans);
@@ -58,6 +109,7 @@
       justify-content: flex-start;
       overflow-x: hidden;
       padding-bottom: env(safe-area-inset-bottom, 24px);
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .pwa-banner {
@@ -65,7 +117,7 @@
       width: 100%;
       max-width: 480px;
       background: var(--terracotta-light);
-      border: 1px solid #ebd4cb;
+      border: 1px solid rgba(195, 89, 54, 0.25);
       border-radius: 10px;
       padding: 10px 14px;
       margin: 10px 16px 0;
@@ -100,7 +152,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 20px 20px 14px;
+      padding: 18px 16px 12px;
     }
 
     .brand-group {
@@ -111,7 +163,7 @@
 
     .brand-title {
       font-family: var(--font-serif);
-      font-size: 26px;
+      font-size: 25px;
       font-weight: 600;
       letter-spacing: -0.02em;
       color: var(--text-main);
@@ -127,25 +179,33 @@
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .btn-header {
-      background: rgba(255, 255, 255, 0.5);
+      background: var(--bg-card);
       border: 1px solid var(--border-card);
       color: var(--text-muted);
       font-family: var(--font-mono);
       font-size: 12px;
-      padding: 6px 13px;
+      padding: 6px 11px;
       border-radius: 7px;
       cursor: pointer;
       transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
 
     .btn-header:hover {
-      background: #ffffff;
+      background: var(--bg-card);
       color: var(--text-main);
       border-color: var(--text-muted);
+      transform: translateY(-1px);
+    }
+
+    .btn-header-icon {
+      padding: 6px 9px;
     }
 
     main.stage-container {
@@ -172,11 +232,12 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: #faf7f1;
+      background: var(--bg-card);
       border-radius: 20px;
       border: 1px solid var(--border-stack);
       pointer-events: none;
       transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease;
+      filter: brightness(0.97);
     }
 
     .stack-layer.layer-1 {
@@ -187,7 +248,7 @@
 
     .stack-layer.layer-2 {
       transform: translateY(13px) rotate(-1.6deg) scale(0.98);
-      box-shadow: 0 4px 10px rgba(60, 45, 30, 0.04);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
       z-index: 0;
     }
 
@@ -246,7 +307,7 @@
     .card-face.card-back {
       transform: rotateY(180deg);
       z-index: 1;
-      padding: 22px 20px 18px;
+      padding: 20px 20px 18px;
     }
 
     .card-meta-top {
@@ -254,7 +315,7 @@
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .badge-today {
@@ -370,18 +431,21 @@
     .ruled-canvas-container {
       flex: 1;
       position: relative;
+      margin-top: 4px;
+      border-radius: 4px;
+      min-height: 240px;
+    }
+
+    /* Paper Rulings */
+    .ruled-canvas-container.style-ruled {
       background: repeating-linear-gradient(
         transparent,
         transparent 33px,
         var(--ruled-line) 33px,
         var(--ruled-line) 34px
       );
-      margin-top: 6px;
-      border-radius: 4px;
-      min-height: 250px;
     }
-
-    .ruled-canvas-container::before {
+    .ruled-canvas-container.style-ruled::before {
       content: '';
       position: absolute;
       top: 0;
@@ -392,17 +456,35 @@
       pointer-events: none;
     }
 
+    .ruled-canvas-container.style-dotted {
+      background-image: radial-gradient(var(--ruled-line) 1.5px, transparent 1.5px);
+      background-size: 24px 24px;
+    }
+    .ruled-canvas-container.style-dotted::before { display: none; }
+
+    .ruled-canvas-container.style-blank {
+      background: transparent;
+    }
+    .ruled-canvas-container.style-blank::before { display: none; }
+
+    .ruled-canvas-container.style-grid {
+      background-image: linear-gradient(var(--ruled-line) 1px, transparent 1px),
+                        linear-gradient(90deg, var(--ruled-line) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .ruled-canvas-container.style-grid::before { display: none; }
+
     .journal-textarea {
       width: 100%;
       height: 100%;
-      min-height: 250px;
+      min-height: 240px;
       background: transparent;
       border: none;
       outline: none;
       resize: none;
-      font-family: var(--font-serif);
-      font-size: 17px;
-      line-height: 34px;
+      font-family: var(--journal-font);
+      font-size: var(--journal-size);
+      line-height: var(--journal-line-height);
       color: var(--text-main);
       padding: 0 8px 0 38px;
       overflow-y: auto;
@@ -417,9 +499,29 @@
 
     .canvas-meta-bar {
       display: flex;
-      justify-content: flex-end;
-      padding: 4px 6px 0;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 4px 0;
+      gap: 10px;
     }
+
+    .word-goal-progress {
+      flex: 1;
+      max-width: 140px;
+      height: 4px;
+      background: rgba(0, 0, 0, 0.08);
+      border-radius: 2px;
+      overflow: hidden;
+      display: none;
+    }
+    .word-goal-progress.is-active { display: block; }
+    .word-goal-bar {
+      height: 100%;
+      background: var(--terracotta);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
     .word-count {
       font-family: var(--font-mono);
       font-size: 10px;
@@ -427,7 +529,7 @@
     }
 
     .attached-photo-section {
-      margin-top: 8px;
+      margin-top: 6px;
       display: none;
     }
     .attached-photo-section.has-photo {
@@ -437,17 +539,17 @@
     .photo-frame {
       position: relative;
       display: inline-block;
-      background: #ffffff;
-      padding: 6px 6px 14px;
+      background: var(--bg-card);
+      padding: 5px 5px 12px;
       border-radius: 4px;
       border: 1px solid var(--border-card);
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-      max-width: 170px;
+      max-width: 160px;
     }
 
     .photo-frame img {
       width: 100%;
-      max-height: 110px;
+      max-height: 100px;
       object-fit: cover;
       border-radius: 2px;
       display: block;
@@ -471,12 +573,12 @@
     }
 
     .card-meta-bottom {
-      margin-top: 10px;
+      margin-top: 8px;
       display: flex;
       flex-direction: column;
       gap: 8px;
       border-top: 1px solid var(--border-card);
-      padding-top: 10px;
+      padding-top: 8px;
     }
 
     .mood-row {
@@ -501,7 +603,7 @@
       border: 1px solid transparent;
       font-size: 18px;
       cursor: pointer;
-      padding: 3px 5px;
+      padding: 2px 4px;
       border-radius: 8px;
       transition: transform 0.15s, background 0.15s;
     }
@@ -535,7 +637,7 @@
     }
     .tags-input:focus {
       border-color: var(--terracotta);
-      background: #ffffff;
+      background: var(--bg-card);
     }
 
     .tag-chip {
@@ -559,8 +661,15 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-top: 10px;
-      padding-top: 6px;
+      margin-top: 8px;
+      padding-top: 4px;
+      gap: 6px;
+    }
+
+    .action-tools-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
     .btn-text-action {
@@ -570,25 +679,26 @@
       font-size: 11px;
       color: var(--text-muted);
       cursor: pointer;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 4px;
-      padding: 5px 8px;
+      padding: 4px 7px;
       border-radius: 4px;
-      transition: background 0.2s;
+      transition: background 0.2s, color 0.2s;
     }
     .btn-text-action:hover {
       color: var(--text-main);
-      background: rgba(0, 0, 0, 0.04);
+      background: rgba(0, 0, 0, 0.05);
     }
 
+    /* Clean bottom navigation only */
     .bottom-navigation {
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-top: 20px;
-      padding: 0 6px;
+      margin-top: 22px;
+      padding: 0 10px;
     }
 
     .nav-arrow {
@@ -620,42 +730,15 @@
       color: var(--text-dim);
     }
 
-    .aux-controls {
-      display: flex;
-      gap: 10px;
-      margin-top: 18px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .btn-aux {
-      background: rgba(255, 255, 255, 0.6);
-      border: 1px solid var(--border-card);
-      padding: 6px 12px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--text-muted);
-      border-radius: 6px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s;
-    }
-    .btn-aux:hover {
-      background: #ffffff;
-      color: var(--text-main);
-      border-color: var(--text-muted);
-    }
-
+    /* Modal Styling */
     .modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(43, 38, 32, 0.45);
-      backdrop-filter: blur(3px);
+      background: rgba(43, 38, 32, 0.55);
+      backdrop-filter: blur(4px);
       z-index: 100;
       display: none;
       align-items: center;
@@ -671,13 +754,13 @@
       border: 1px solid var(--border-card);
       border-radius: 18px;
       width: 100%;
-      max-width: 440px;
+      max-width: 460px;
       max-height: 88vh;
       display: flex;
       flex-direction: column;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
       overflow: hidden;
-      animation: modalSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: modalSlideIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     @keyframes modalSlideIn {
@@ -686,7 +769,7 @@
     }
 
     .modal-header {
-      padding: 18px 20px;
+      padding: 16px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -715,28 +798,276 @@
       border-radius: 6px;
       cursor: pointer;
       color: var(--text-muted);
+      transition: all 0.15s;
     }
     .btn-modal-close:hover {
-      background: #ffffff;
+      background: var(--bg-canvas);
       color: var(--text-main);
     }
 
     .modal-body {
-      padding: 16px 20px;
+      padding: 18px 20px;
       overflow-y: auto;
       flex: 1;
     }
 
-    .search-bar-wrap {
-      margin-bottom: 14px;
+    /* Settings Navigation Tabs */
+    .settings-tabs {
+      display: flex;
+      gap: 4px;
+      border-bottom: 1px solid var(--border-card);
+      padding: 8px 16px 0;
+      background: var(--bg-card);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .settings-tabs::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 8px 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover {
+      color: var(--text-main);
+    }
+    .tab-btn.is-active {
+      color: var(--terracotta);
+      border-bottom-color: var(--terracotta);
+      font-weight: 600;
     }
 
+    .settings-panel {
+      display: none;
+    }
+    .settings-panel.is-active {
+      display: block;
+    }
+
+    .settings-section-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+    }
+
+    .setting-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-card);
+      gap: 12px;
+    }
+    .setting-item:last-child {
+      border-bottom: none;
+    }
+
+    .setting-info {
+      flex: 1;
+    }
+    .setting-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-main);
+      margin-bottom: 2px;
+    }
+    .setting-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+      line-height: 1.4;
+    }
+
+    .setting-control select, 
+    .setting-control input[type="text"],
+    .setting-control input[type="password"] {
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border-card);
+      background: var(--bg-card);
+      color: var(--text-main);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      outline: none;
+      user-select: text;
+    }
+
+    /* Switch toggle */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+    }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: var(--border-stack);
+      transition: .25s;
+      border-radius: 24px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .25s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: var(--terracotta);
+    }
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    /* Button grids in settings */
+    .button-group-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .btn-action-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s;
+      text-align: left;
+    }
+    .btn-action-block:hover {
+      border-color: var(--terracotta);
+      background: var(--terracotta-light);
+    }
+    .btn-action-block.danger {
+      color: #dc2626;
+    }
+    .btn-action-block.danger:hover {
+      background: #fee2e2;
+      border-color: #ef4444;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .stat-box {
+      background: rgba(0, 0, 0, 0.02);
+      border: 1px solid var(--border-card);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .stat-number {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--terracotta);
+    }
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* Pin Lock Screen */
+    .lock-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--bg-canvas);
+      z-index: 9999;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .lock-overlay.is-active { display: flex; }
+    .lock-pad-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      max-width: 280px;
+    }
+    .lock-dots {
+      display: flex;
+      gap: 12px;
+      margin: 8px 0;
+    }
+    .lock-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid var(--terracotta);
+      background: transparent;
+      transition: background 0.15s;
+    }
+    .lock-dot.filled {
+      background: var(--terracotta);
+    }
+    .numpad-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      width: 100%;
+    }
+    .btn-numpad {
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 1px solid var(--border-card);
+      background: var(--bg-card);
+      font-family: var(--font-mono);
+      font-size: 20px;
+      color: var(--text-main);
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+      transition: all 0.12s;
+    }
+    .btn-numpad:hover {
+      background: var(--terracotta-light);
+      border-color: var(--terracotta);
+      transform: scale(1.05);
+    }
+
+    /* Index list styling */
+    .search-bar-wrap { margin-bottom: 14px; }
     .search-input {
       width: 100%;
       padding: 8px 12px;
       border: 1px solid var(--border-card);
       border-radius: 8px;
-      background: #ffffff;
+      background: var(--bg-card);
       font-family: var(--font-mono);
       font-size: 12px;
       color: var(--text-main);
@@ -796,7 +1127,7 @@
       font-family: var(--font-serif);
       font-size: 15px;
       color: var(--text-main);
-      background: #ffffff;
+      background: var(--bg-card);
       outline: none;
       user-select: text;
     }
@@ -819,6 +1150,7 @@
       font-size: 12px;
       border-radius: 6px;
       cursor: pointer;
+      transition: background 0.15s;
     }
     .btn-primary:hover {
       background: var(--terracotta-hover);
@@ -852,6 +1184,7 @@
       position: relative;
       background: transparent;
       border: 1px solid transparent;
+      color: var(--text-main);
     }
     .cal-day-cell:hover:not(.empty) {
       background: rgba(0, 0, 0, 0.04);
@@ -886,27 +1219,41 @@
       .card-face { padding: 22px 18px; }
       .quote-text { font-size: 20px; }
       .card-stack-viewport { height: 540px; }
+      .button-group-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
+  <!-- PWA Install Banner -->
   <div class="pwa-banner" id="pwaBanner">
     <span class="pwa-text">📲 Install Daybook app to your Home Screen</span>
     <button class="btn-pwa-install" id="btnPwaInstall">Install</button>
   </div>
 
+  <!-- Header with Clean Navigation -->
   <header class="app-header">
     <div class="brand-group">
       <h1 class="brand-title">Daybook</h1>
       <span class="brand-subtitle">stack</span>
     </div>
     <div class="header-actions">
-      <button class="btn-header" id="btnToday">Today</button>
-      <button class="btn-header" id="btnOpenIndex">Index</button>
+      <button class="btn-header" id="btnToday" title="Jump to today">Today</button>
+      <button class="btn-header" id="btnOpenCalendar" title="Calendar overview">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        <span>Cal</span>
+      </button>
+      <button class="btn-header" id="btnOpenIndex" title="Search all entries">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><circle cx="4" cy="6" r="1.5"></circle><circle cx="4" cy="12" r="1.5"></circle><circle cx="4" cy="18" r="1.5"></circle></svg>
+        <span>Index</span>
+      </button>
+      <button class="btn-header btn-header-icon" id="btnOpenSettings" title="Settings, themes & backup">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      </button>
     </div>
   </header>
 
+  <!-- Main Card Stage -->
   <main class="stage-container">
     <div class="card-stack-viewport" id="cardViewport">
       <div class="stack-layer layer-2" id="stackLayer2"></div>
@@ -915,10 +1262,11 @@
       <div class="journal-card-wrapper" id="cardWrapper">
         <article class="journal-card" id="mainJournalCard">
           
+          <!-- Front Face: Quote -->
           <section class="card-face card-front">
             <div class="card-meta-top">
               <span class="badge-today" id="frontTodayBadge">TODAY</span>
-              <span class="date-display" id="frontDateText">Sep 9, 2026 · Wednesday</span>
+              <span class="date-display" id="frontDateText">Sep 10, 2026 · Thursday</span>
             </div>
 
             <div class="quote-container">
@@ -937,11 +1285,12 @@
             </div>
           </section>
 
+          <!-- Back Face: Journal Entry -->
           <section class="card-face card-back">
             <div class="card-meta-top">
-              <span class="date-display" id="backDateText">Sep 9, 2026</span>
+              <span class="date-display" id="backDateText">Sep 10, 2026</span>
               <div style="display: flex; align-items: center; gap: 8px;">
-                <span class="date-display" id="backWeekdayText">Wednesday</span>
+                <span class="date-display" id="backWeekdayText">Thursday</span>
                 <div class="save-indicator" id="saveIndicator">
                   <span>Saved</span>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -952,7 +1301,7 @@
             </div>
 
             <div class="back-content-wrapper">
-              <div class="ruled-canvas-container">
+              <div class="ruled-canvas-container style-ruled" id="canvasContainer">
                 <textarea 
                   class="journal-textarea" 
                   id="journalTextarea" 
@@ -962,6 +1311,9 @@
               </div>
 
               <div class="canvas-meta-bar">
+                <div class="word-goal-progress" id="wordGoalProgress">
+                  <div class="word-goal-bar" id="wordGoalBar"></div>
+                </div>
                 <span class="word-count" id="wordCountDisplay">0 words</span>
               </div>
 
@@ -997,17 +1349,25 @@
             </div>
 
             <div class="back-footer-actions">
-              <button class="btn-text-action" id="btnAddPhoto" type="button">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                  <circle cx="8.5" cy="8.5" r="1.5"/>
-                  <polyline points="21 15 16 10 5 21"/>
-                </svg>
-                <span>+ add photo</span>
-              </button>
+              <div class="action-tools-group">
+                <button class="btn-text-action" id="btnAddPhoto" type="button" title="Attach an image">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                    <polyline points="21 15 16 10 5 21"/>
+                  </svg>
+                  <span>+ photo</span>
+                </button>
+                <button class="btn-text-action" id="btnInsertTime" type="button" title="Insert current timestamp">
+                  <span>+ time</span>
+                </button>
+                <button class="btn-text-action" id="btnInspirationPrompt" type="button" title="Get writing inspiration">
+                  <span>+ prompt</span>
+                </button>
+              </div>
 
               <button class="btn-text-action" id="btnFlipToFront" type="button">
-                <span>view quote · flip back ↺</span>
+                <span>quote · flip ↺</span>
               </button>
             </div>
           </section>
@@ -1016,6 +1376,7 @@
       </div>
     </div>
 
+    <!-- Clean Navigation Bar (No clutter below!) -->
     <nav class="bottom-navigation">
       <button class="nav-arrow" id="btnNewer" type="button">
         <span>‹ newer</span>
@@ -1025,35 +1386,280 @@
         <span>older ›</span>
       </button>
     </nav>
-
-    <div class="aux-controls">
-      <button class="btn-aux" id="btnOpenCalendar" type="button">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-        Calendar
-      </button>
-      <button class="btn-aux" id="btnSoundToggle" type="button">
-        🔊 Sound On
-      </button>
-      <button class="btn-aux" id="btnExportJSON" type="button">
-        Export JSON
-      </button>
-      <button class="btn-aux" id="btnImportJSON" type="button">
-        Import JSON
-      </button>
-      <button class="btn-aux" id="btnExportMarkdown" type="button">
-        Markdown
-      </button>
-    </div>
   </main>
 
+  <!-- Hidden File Pickers -->
   <input type="file" id="photoFileInput" accept="image/*" />
   <input type="file" id="importFileInput" accept=".json,application/json" />
 
+  <!-- Full-Featured Settings Modal -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-card" style="max-width: 480px;">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title">Settings</h2>
+          <p class="modal-subtitle">Preferences, tools, & backups</p>
+        </div>
+        <button class="btn-modal-close" id="btnCloseSettings" type="button">Done</button>
+      </div>
+
+      <!-- Settings Tab Bar -->
+      <nav class="settings-tabs">
+        <button class="tab-btn is-active" data-tab="tab-appearance" type="button">Appearance</button>
+        <button class="tab-btn" data-tab="tab-writing" type="button">Writing & Sound</button>
+        <button class="tab-btn" data-tab="tab-stats" type="button">Insights</button>
+        <button class="tab-btn" data-tab="tab-privacy" type="button">Privacy</button>
+        <button class="tab-btn" data-tab="tab-data" type="button">Backup & Data</button>
+      </nav>
+
+      <div class="modal-body">
+        
+        <!-- Tab 1: Appearance -->
+        <div class="settings-panel is-active" id="tab-appearance">
+          <div class="setting-item">
+            <div class="setting-info">
+              <div class="setting-title">Theme Palette</div>
+              <div class="setting-desc">Select color mood and atmosphere</div>
+            </div>
+            <div class="setting-control">
+              <select id="settingThemeSelect">
+                <option value="warm">Warm Parchment</option>
+                <option value="dark">Midnight Slate</option>
+                <option value="sage">Forest Sage</option>
+                <option value="minimal">Minimalist Slate</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-info">
+              <div class="setting-title">Journal Typography</div>
+              <div class="setting-desc">Font family used for writing</div>
+            </div>
+            <div class="setting-control">
+              <select id="settingFontSelect">
+                <option value="serif">Classic Lora (Serif)</option>
+                <option value="sans">Clean Inter (Modern)</option>
+                <option value="mono">JetBrains (Monospace)</option>
+                <option value="hand">Caveat (Script/Hand)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-info">
+              <div class="setting-title">Font Size</div>
+              <div class="setting-desc">Comfort level for writing and reading</div>
+            </div>
+            <div class="setting-control">
+              <select id="settingFontSizeSelect">
+                <option value="15">Compact (15px)</option>
+                <option value="17" selected>Standard (17px)</option>
+                <option value="20">Spacious (20px)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-info">
+              <div class="setting-title">Paper Texture / Ruling</div>
+              <div class="setting-desc">Visual styling of the card canvas</div>
+            </div>
+            <div class="setting-control">
+              <select id="settingPaperSelect">
+                <option value="style-ruled">Ruled Notebook Lines</option>
+                <option value="style-dotted">Dot Grid (Bullet)</option>
+                <option value="style-blank">Plain Blank Paper</option>
+                <option value="style-grid">Square Grid</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Writing & Audio -->
+        <div class="settings-panel" id="tab-writing">
+          <div class="setting-item">
+            <div class="setting-info">
+              <div class="setting-title">Tactile Audio Effects</div>
+              <div class="setting-desc">Mechanical paper rustle and deck dealing sounds</div>
+            </div>
+            <div class="setting-control">
+              <label class="switch">
+                <input type="checkbox" id="settingSoundToggle" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-info">
+              <div class="setting-title">Haptic Touch Vibration</div>
+              <div class="setting-desc">Gentle tactile feedback on mobile taps</div>
+            </div>
+            <div class="setting-control">
+              <label class="switch">
+                <input type="checkbox" id="settingHapticsToggle" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-info">
+              <div class="setting-title">Daily Word Count Target</div>
+              <div class="setting-desc">Shows a visual progress bar while writing</div>
+            </div>
+            <div class="setting-control">
+              <select id="settingWordGoalSelect">
+                <option value="0">No Goal (Off)</option>
+                <option value="50">50 words (Micro-journal)</option>
+                <option value="100">100 words (Quick reflection)</option>
+                <option value="250">250 words (Standard entry)</option>
+                <option value="500">500 words (Deep thought)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-info">
+              <div class="setting-title">Default Opening Card Face</div>
+              <div class="setting-desc">Which side appears first when loading</div>
+            </div>
+            <div class="setting-control">
+              <select id="settingOpenSideSelect">
+                <option value="front">Inspiring Quote (Front)</option>
+                <option value="back">Journal Canvas (Back)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Insights & Statistics -->
+        <div class="settings-panel" id="tab-stats">
+          <div class="stats-grid">
+            <div class="stat-box">
+              <span class="stat-number" id="statStreak">0</span>
+              <span class="stat-label">Day Streak 🔥</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number" id="statTotalEntries">0</span>
+              <span class="stat-label">Total Entries 📖</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number" id="statTotalWords">0</span>
+              <span class="stat-label">Words Written ✍️</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number" id="statTopMood">—</span>
+              <span class="stat-label">Top Mood 🌟</span>
+            </div>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-info">
+              <div class="setting-title">Storage Consumption</div>
+              <div class="setting-desc" id="statStorageSize">Calculating local footprint...</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 10px;">
+            <button class="btn-action-block" id="btnRandomMemory" style="width: 100%;" type="button">
+              <span>🎲 Jump to a Random Past Memory ("Flashback")</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tab 4: Privacy & PIN Lock -->
+        <div class="settings-panel" id="tab-privacy">
+          <div class="setting-item">
+            <div class="setting-info">
+              <div class="setting-title">4-Digit Passcode Lock</div>
+              <div class="setting-desc">Protect your journal from casual peeking</div>
+            </div>
+            <div class="setting-control">
+              <label class="switch">
+                <input type="checkbox" id="settingPinToggle" />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div id="pinSetupContainer" style="display: none; margin-top: 12px;">
+            <div class="form-group">
+              <label class="form-label" for="inputNewPin">Set / Change 4-Digit PIN</label>
+              <div style="display: flex; gap: 8px;">
+                <input type="password" maxlength="4" pattern="[0-9]*" inputmode="numeric" id="inputNewPin" class="form-input" style="letter-spacing: 0.3em; text-align: center; font-size: 18px; width: 140px;" placeholder="••••" />
+                <button class="btn-primary" id="btnSaveNewPin" type="button">Set PIN</button>
+              </div>
+            </div>
+            <button class="btn-action-block" id="btnLockNow" style="margin-top: 10px;" type="button">
+              <span>🔒 Lock Daybook Immediately</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tab 5: Data & Backup (Migrated from bottom) -->
+        <div class="settings-panel" id="tab-data">
+          <div class="settings-section-title">Backup & Restore</div>
+          <div class="button-group-grid">
+            <button class="btn-action-block" id="btnSettingsExportJSON" type="button">
+              <span>💾 Export JSON</span>
+            </button>
+            <button class="btn-action-block" id="btnSettingsImportJSON" type="button">
+              <span>📂 Import JSON</span>
+            </button>
+            <button class="btn-action-block" id="btnSettingsExportMarkdown" type="button">
+              <span>📝 Export Markdown</span>
+            </button>
+            <button class="btn-action-block" id="btnSettingsExportText" type="button">
+              <span>📄 Export Plain Text</span>
+            </button>
+          </div>
+
+          <div class="settings-section-title" style="margin-top: 22px;">Maintenance & Danger Zone</div>
+          <button class="btn-action-block danger" id="btnClearAllData" style="width: 100%;" type="button">
+            <span>⚠️ Clear All Journal Entries</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Passcode Unlock Screen -->
+  <div class="lock-overlay" id="lockOverlay">
+    <div class="lock-pad-container">
+      <h2 style="font-family: var(--font-serif); font-size: 22px; color: var(--text-main);">Daybook Locked</h2>
+      <p style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">Enter your 4-digit passcode</p>
+      <div class="lock-dots" id="lockDots">
+        <div class="lock-dot"></div>
+        <div class="lock-dot"></div>
+        <div class="lock-dot"></div>
+        <div class="lock-dot"></div>
+      </div>
+      <div class="numpad-grid">
+        <button class="btn-numpad" data-num="1" type="button">1</button>
+        <button class="btn-numpad" data-num="2" type="button">2</button>
+        <button class="btn-numpad" data-num="3" type="button">3</button>
+        <button class="btn-numpad" data-num="4" type="button">4</button>
+        <button class="btn-numpad" data-num="5" type="button">5</button>
+        <button class="btn-numpad" data-num="6" type="button">6</button>
+        <button class="btn-numpad" data-num="7" type="button">7</button>
+        <button class="btn-numpad" data-num="8" type="button">8</button>
+        <button class="btn-numpad" data-num="9" type="button">9</button>
+        <button class="btn-numpad" data-num="clear" style="font-size: 12px;" type="button">CLR</button>
+        <button class="btn-numpad" data-num="0" type="button">0</button>
+        <button class="btn-numpad" data-num="del" style="font-size: 14px;" type="button">⌫</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Index Modal -->
   <div class="modal-overlay" id="indexModal">
     <div class="modal-card">
       <div class="modal-header">
         <div>
-          <h2 class="modal-title">Daybook</h2>
+          <h2 class="modal-title">Daybook Index</h2>
           <p class="modal-subtitle">All entries, newest first</p>
         </div>
         <button class="btn-modal-close" id="btnCloseIndex" type="button">Close</button>
@@ -1067,6 +1673,7 @@
     </div>
   </div>
 
+  <!-- Calendar Modal -->
   <div class="modal-overlay" id="calendarModal">
     <div class="modal-card">
       <div class="modal-header">
@@ -1086,6 +1693,7 @@
     </div>
   </div>
 
+  <!-- Quote Editor Modal -->
   <div class="modal-overlay" id="quoteModal">
     <div class="modal-card">
       <div class="modal-header">
@@ -1101,7 +1709,7 @@
           <label class="form-label" for="authorInput">Author / Source</label>
           <input type="text" class="form-input" id="authorInput" placeholder="e.g., Marcus Aurelius" />
         </div>
-        <button class="btn-aux" id="btnRandomQuote" style="margin-top: 4px;" type="button">
+        <button class="btn-action-block" id="btnRandomQuote" style="margin-top: 4px;" type="button">
           🎲 Randomize Curated Quote
         </button>
       </div>
@@ -1111,7 +1719,29 @@
     </div>
   </div>
 
+  <!-- Writing Prompt Modal -->
+  <div class="modal-overlay" id="promptModal">
+    <div class="modal-card" style="max-width: 400px;">
+      <div class="modal-header">
+        <h2 class="modal-title">Reflective Prompt</h2>
+        <button class="btn-modal-close" id="btnClosePrompt" type="button">Close</button>
+      </div>
+      <div class="modal-body">
+        <p id="promptDisplayText" style="font-family: var(--font-serif); font-size: 17px; font-style: italic; line-height: 1.5; color: var(--text-main); margin-bottom: 16px;">
+          What was the most peaceful moment of your day today?
+        </p>
+        <button class="btn-action-block" id="btnAnotherPrompt" style="width: 100%; margin-bottom: 10px;" type="button">
+          🎲 Another Prompt
+        </button>
+        <button class="btn-primary" id="btnInsertPromptToText" style="width: 100%;" type="button">
+          Insert into Entry
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // Offline PWA registration
     if ('serviceWorker' in navigator) {
       const swCode = `
         self.addEventListener('install', e => self.skipWaiting());
@@ -1122,18 +1752,87 @@
       navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
     }
 
-    let soundEnabled = true;
+    // Config & Preferences state
+    const SETTINGS_KEY = "daybook_settings_v1";
+    let appSettings = {
+      theme: "warm",
+      font: "serif",
+      fontSize: "17",
+      paperStyle: "style-ruled",
+      soundEnabled: true,
+      hapticsEnabled: true,
+      wordGoal: 0,
+      openSide: "front",
+      pinEnabled: false,
+      pinHash: ""
+    };
+
+    function loadSettings() {
+      try {
+        const raw = localStorage.getItem(SETTINGS_KEY);
+        if (raw) appSettings = Object.assign(appSettings, JSON.parse(raw));
+      } catch (e) {}
+    }
+
+    function saveSettings() {
+      try {
+        localStorage.setItem(SETTINGS_KEY, JSON.stringify(appSettings));
+        applySettings();
+      } catch (e) {}
+    }
+
+    function applySettings() {
+      // Theme
+      if (appSettings.theme === "warm") {
+        document.documentElement.removeAttribute("data-theme");
+      } else {
+        document.documentElement.setAttribute("data-theme", appSettings.theme);
+      }
+      const themeMeta = document.querySelector('meta[name="theme-color"]');
+      if (themeMeta) {
+        themeMeta.setAttribute("content", appSettings.theme === 'dark' ? '#1c1917' : (appSettings.theme === 'sage' ? '#edf2eb' : '#fbf9f4'));
+      }
+
+      // Font Family
+      const fontMap = {
+        serif: "var(--font-serif)",
+        sans: "var(--font-sans)",
+        mono: "var(--font-mono)",
+        hand: "var(--font-hand)"
+      };
+      document.documentElement.style.setProperty("--journal-font", fontMap[appSettings.font] || "var(--font-serif)");
+
+      // Font Size
+      const sizeVal = parseInt(appSettings.fontSize, 10) || 17;
+      document.documentElement.style.setProperty("--journal-size", `${sizeVal}px`);
+      document.documentElement.style.setProperty("--journal-line-height", `${sizeVal * 2}px`);
+
+      // Paper ruling
+      const canvasContainer = document.getElementById("canvasContainer");
+      if (canvasContainer) {
+        canvasContainer.className = "ruled-canvas-container " + (appSettings.paperStyle || "style-ruled");
+      }
+
+      // Word goal bar visibility
+      const goalBar = document.getElementById("wordGoalProgress");
+      if (goalBar) {
+        if (appSettings.wordGoal > 0) goalBar.classList.add("is-active");
+        else goalBar.classList.remove("is-active");
+      }
+    }
+
+    // Audio & Haptics Engine
     const audioCtx = (window.AudioContext || window.webkitAudioContext) ? new (window.AudioContext || window.webkitAudioContext)() : null;
     
     function triggerHaptic(duration = 10) {
-      if ('vibrate' in navigator) {
+      if (appSettings.hapticsEnabled && 'vibrate' in navigator) {
         try { navigator.vibrate(duration); } catch(e) {}
       }
     }
 
     function playTactileSound(type = 'paper') {
       triggerHaptic(type === 'paper' ? 14 : 8);
-      if (!soundEnabled || !audioCtx) return;
+      if (!appSettings.soundEnabled || !audioCtx) return;
       try {
         if (audioCtx.state === 'suspended') audioCtx.resume();
         const osc = audioCtx.createOscillator();
@@ -1168,6 +1867,7 @@
       } catch (e) {}
     }
 
+    // PWA Install prompt
     let deferredPrompt = null;
     const pwaBanner = document.getElementById('pwaBanner');
     const btnPwaInstall = document.getElementById('btnPwaInstall');
@@ -1179,12 +1879,13 @@
     btnPwaInstall.addEventListener('click', async () => {
       if (deferredPrompt) {
         deferredPrompt.prompt();
-        const choice = await deferredPrompt.userChoice;
+        await deferredPrompt.userChoice;
         deferredPrompt = null;
         pwaBanner.classList.remove('is-visible');
       }
     });
 
+    // Curated Reflection Quotes
     const CURATED_QUOTES = [
       { text: "Discipline is choosing between what you want now and what you want most.", author: "Abraham Lincoln" },
       { text: "We suffer more often in imagination than in reality.", author: "Seneca" },
@@ -1208,6 +1909,20 @@
       { text: "Live in the sunshine, swim the sea, drink the wild air.", author: "Ralph Waldo Emerson" }
     ];
 
+    // Curated Writing Prompts
+    const WRITING_PROMPTS = [
+      "What was the most peaceful or joyful moment of your day?",
+      "What is one challenge you overcame or learned from today?",
+      "Who or what are you deeply grateful for right now?",
+      "What did you spend your mental energy on today, and was it worth it?",
+      "Describe one pleasant sensory detail from today (a smell, sound, view).",
+      "What would make tomorrow a meaningful and successful day?",
+      "What is a small victory you accomplished recently that you didn't celebrate?",
+      "If you could give your morning self one sentence of advice, what would it be?",
+      "What is something you are looking forward to this week?"
+    ];
+
+    // Data Storage
     const STORAGE_KEY = "daybook_card_journal_v1";
     let journalData = {};
     let currentDate = new Date();
@@ -1293,10 +2008,10 @@
       return journalData[key];
     }
 
+    // DOM Elements
     const cardWrapper = document.getElementById("cardWrapper");
     const cardEl = document.getElementById("mainJournalCard");
     const stackLayer1 = document.getElementById("stackLayer1");
-    const stackLayer2 = document.getElementById("stackLayer2");
     const frontDateText = document.getElementById("frontDateText");
     const backDateText = document.getElementById("backDateText");
     const backWeekdayText = document.getElementById("backWeekdayText");
@@ -1305,6 +2020,7 @@
     const quoteAuthorDisplay = document.getElementById("quoteAuthorDisplay");
     const journalTextarea = document.getElementById("journalTextarea");
     const wordCountDisplay = document.getElementById("wordCountDisplay");
+    const wordGoalBar = document.getElementById("wordGoalBar");
     const photoContainer = document.getElementById("photoContainer");
     const attachedPhotoImg = document.getElementById("attachedPhotoImg");
     const btnRemovePhoto = document.getElementById("btnRemovePhoto");
@@ -1317,11 +2033,13 @@
     const btnOlder = document.getElementById("btnOlder");
     const btnToday = document.getElementById("btnToday");
     const btnAddPhoto = document.getElementById("btnAddPhoto");
+    const btnInsertTime = document.getElementById("btnInsertTime");
+    const btnInspirationPrompt = document.getElementById("btnInspirationPrompt");
     const photoFileInput = document.getElementById("photoFileInput");
     const btnFlipToFront = document.getElementById("btnFlipToFront");
     const btnEditQuote = document.getElementById("btnEditQuote");
-    const btnSoundToggle = document.getElementById("btnSoundToggle");
 
+    // Modal elements
     const indexModal = document.getElementById("indexModal");
     const btnOpenIndex = document.getElementById("btnOpenIndex");
     const btnCloseIndex = document.getElementById("btnCloseIndex");
@@ -1335,6 +2053,12 @@
     const btnSaveQuote = document.getElementById("btnSaveQuote");
     const btnRandomQuote = document.getElementById("btnRandomQuote");
 
+    const promptModal = document.getElementById("promptModal");
+    const promptDisplayText = document.getElementById("promptDisplayText");
+    const btnClosePrompt = document.getElementById("btnClosePrompt");
+    const btnAnotherPrompt = document.getElementById("btnAnotherPrompt");
+    const btnInsertPromptToText = document.getElementById("btnInsertPromptToText");
+
     const calendarModal = document.getElementById("calendarModal");
     const btnOpenCalendar = document.getElementById("btnOpenCalendar");
     const btnCloseCalendar = document.getElementById("btnCloseCalendar");
@@ -1343,10 +2067,35 @@
     const calPrevMonth = document.getElementById("calPrevMonth");
     const calNextMonth = document.getElementById("calNextMonth");
 
-    const btnExportJSON = document.getElementById("btnExportJSON");
-    const btnImportJSON = document.getElementById("btnImportJSON");
+    // Settings elements
+    const settingsModal = document.getElementById("settingsModal");
+    const btnOpenSettings = document.getElementById("btnOpenSettings");
+    const btnCloseSettings = document.getElementById("btnCloseSettings");
+    const settingThemeSelect = document.getElementById("settingThemeSelect");
+    const settingFontSelect = document.getElementById("settingFontSelect");
+    const settingFontSizeSelect = document.getElementById("settingFontSizeSelect");
+    const settingPaperSelect = document.getElementById("settingPaperSelect");
+    const settingSoundToggle = document.getElementById("settingSoundToggle");
+    const settingHapticsToggle = document.getElementById("settingHapticsToggle");
+    const settingWordGoalSelect = document.getElementById("settingWordGoalSelect");
+    const settingOpenSideSelect = document.getElementById("settingOpenSideSelect");
+    const settingPinToggle = document.getElementById("settingPinToggle");
+    const pinSetupContainer = document.getElementById("pinSetupContainer");
+    const inputNewPin = document.getElementById("inputNewPin");
+    const btnSaveNewPin = document.getElementById("btnSaveNewPin");
+    const btnLockNow = document.getElementById("btnLockNow");
+    const btnSettingsExportJSON = document.getElementById("btnSettingsExportJSON");
+    const btnSettingsImportJSON = document.getElementById("btnSettingsImportJSON");
+    const btnSettingsExportMarkdown = document.getElementById("btnSettingsExportMarkdown");
+    const btnSettingsExportText = document.getElementById("btnSettingsExportText");
+    const btnClearAllData = document.getElementById("btnClearAllData");
+    const btnRandomMemory = document.getElementById("btnRandomMemory");
     const importFileInput = document.getElementById("importFileInput");
-    const btnExportMarkdown = document.getElementById("btnExportMarkdown");
+
+    // Lock Screen elements
+    const lockOverlay = document.getElementById("lockOverlay");
+    const lockDots = document.querySelectorAll(".lock-dot");
+    let currentPinInput = "";
 
     let saveTimeout = null;
     function showSavedIndicator() {
@@ -1359,10 +2108,16 @@
 
     function updateWordCount(text) {
       const trimmed = text.trim();
-      if (!trimmed) {
-        wordCountDisplay.textContent = "0 words";
+      const words = trimmed ? trimmed.split(/\s+/).length : 0;
+      const goal = parseInt(appSettings.wordGoal, 10) || 0;
+
+      if (goal > 0) {
+        const pct = Math.min(Math.round((words / goal) * 100), 100);
+        wordCountDisplay.textContent = `${words} / ${goal} words (${pct}%)`;
+        wordGoalBar.style.width = `${pct}%`;
+        if (pct >= 100) wordGoalBar.style.background = "#10b981";
+        else wordGoalBar.style.background = "var(--terracotta)";
       } else {
-        const words = trimmed.split(/\s+/).length;
         wordCountDisplay.textContent = `${words} word${words === 1 ? '' : 's'}`;
       }
     }
@@ -1424,6 +2179,7 @@
       btnNewer.disabled = isFutureOrToday;
     }
 
+    // Touch & Swipe interaction on Card
     let startX = 0;
     let startY = 0;
     let currentX = 0;
@@ -1590,12 +2346,6 @@
       playTactileSound('paper');
     });
 
-    btnSoundToggle.addEventListener("click", () => {
-      soundEnabled = !soundEnabled;
-      btnSoundToggle.textContent = soundEnabled ? "🔊 Sound On" : "🔇 Sound Off";
-      playTactileSound('click');
-    });
-
     btnEditQuote.addEventListener("click", (e) => {
       e.stopPropagation();
       openQuoteModal();
@@ -1609,6 +2359,65 @@
       saveData();
     });
 
+    // Quick Insert Timestamp
+    btnInsertTime.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const stamp = `\n[${timeStr}] `;
+      
+      const start = journalTextarea.selectionStart;
+      const end = journalTextarea.selectionEnd;
+      const val = journalTextarea.value;
+      
+      journalTextarea.value = val.substring(0, start) + stamp + val.substring(end);
+      journalTextarea.focus();
+      journalTextarea.selectionStart = journalTextarea.selectionEnd = start + stamp.length;
+      
+      const entry = getEntry(currentDate);
+      entry.text = journalTextarea.value;
+      entry.updatedAt = new Date().toISOString();
+      updateWordCount(entry.text);
+      saveData();
+      playTactileSound('click');
+    });
+
+    // Writing Prompt Modal
+    btnInspirationPrompt.addEventListener("click", (e) => {
+      e.stopPropagation();
+      showRandomPrompt();
+      promptModal.classList.add("is-active");
+      playTactileSound('click');
+    });
+
+    function showRandomPrompt() {
+      const prompt = WRITING_PROMPTS[Math.floor(Math.random() * WRITING_PROMPTS.length)];
+      promptDisplayText.textContent = `"${prompt}"`;
+    }
+
+    btnAnotherPrompt.addEventListener("click", () => {
+      showRandomPrompt();
+      playTactileSound('click');
+    });
+
+    btnInsertPromptToText.addEventListener("click", () => {
+      const promptText = promptDisplayText.textContent.replace(/^"|"$/g, '');
+      const stamp = `\n\n✦ Prompt: ${promptText}\n`;
+      journalTextarea.value += stamp;
+      journalTextarea.focus();
+      
+      const entry = getEntry(currentDate);
+      entry.text = journalTextarea.value;
+      entry.updatedAt = new Date().toISOString();
+      updateWordCount(entry.text);
+      saveData();
+      promptModal.classList.remove("is-active");
+      playTactileSound('paper');
+    });
+
+    btnClosePrompt.addEventListener("click", () => promptModal.classList.remove("is-active"));
+
+    // Mood picker
     moodButtons.forEach(btn => {
       btn.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -1620,6 +2429,7 @@
       });
     });
 
+    // Tag management
     tagsInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === ",") {
         e.preventDefault();
@@ -1649,6 +2459,7 @@
       }
     });
 
+    // Photo attachments
     btnAddPhoto.addEventListener("click", (e) => {
       e.stopPropagation();
       photoFileInput.click();
@@ -1678,6 +2489,7 @@
       renderCard();
     });
 
+    // Keyboard shortcuts
     window.addEventListener("keydown", (e) => {
       if (document.activeElement === journalTextarea || 
           document.activeElement === tagsInput || 
@@ -1693,6 +2505,7 @@
       }
     });
 
+    // Quote Modal
     function openQuoteModal() {
       const entry = getEntry(currentDate);
       quoteInput.value = entry.quote || "";
@@ -1719,6 +2532,7 @@
       quoteModal.classList.remove("is-active");
     });
 
+    // Index Search Modal
     btnOpenIndex.addEventListener("click", () => {
       renderIndexList();
       indexModal.classList.add("is-active");
@@ -1752,13 +2566,8 @@
         const el = document.createElement("div");
         el.className = "index-entry-item";
         const preview = item.text ? item.text.trim().substring(0, 75) : "— blank —";
-        const moodDisplay = item.mood ? (
-          item.mood === 'calm' ? '😌' :
-          item.mood === 'happy' ? '😊' :
-          item.mood === 'neutral' ? '😐' :
-          item.mood === 'sad' ? '😔' :
-          item.mood === 'angry' ? '😤' : '🎉'
-        ) : '';
+        const moodMap = { calm: '😌', happy: '😊', neutral: '😐', sad: '😔', angry: '😤', party: '🎉' };
+        const moodDisplay = item.mood ? (moodMap[item.mood] || '') : '';
         const photoBadge = item.photo ? ' 📷' : '';
 
         el.innerHTML = `
@@ -1788,6 +2597,7 @@
       return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
+    // Calendar Modal
     btnOpenCalendar.addEventListener("click", () => {
       calViewDate = new Date(currentDate);
       renderCalendar();
@@ -1851,7 +2661,258 @@
       }
     }
 
-    btnExportJSON.addEventListener("click", () => {
+    // Settings Modal Tab Switcher
+    const tabButtons = document.querySelectorAll(".settings-tabs .tab-btn");
+    const tabPanels = document.querySelectorAll(".settings-panel");
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        tabButtons.forEach(b => b.classList.remove("is-active"));
+        tabPanels.forEach(p => p.classList.remove("is-active"));
+        btn.classList.add("is-active");
+        const targetId = btn.dataset.tab;
+        const targetPanel = document.getElementById(targetId);
+        if (targetPanel) targetPanel.classList.add("is-active");
+        if (targetId === "tab-stats") updateStatsView();
+        playTactileSound('click');
+      });
+    });
+
+    btnOpenSettings.addEventListener("click", () => {
+      syncSettingsUI();
+      settingsModal.classList.add("is-active");
+      playTactileSound('click');
+    });
+
+    btnCloseSettings.addEventListener("click", () => {
+      settingsModal.classList.remove("is-active");
+    });
+
+    function syncSettingsUI() {
+      settingThemeSelect.value = appSettings.theme;
+      settingFontSelect.value = appSettings.font;
+      settingFontSizeSelect.value = appSettings.fontSize;
+      settingPaperSelect.value = appSettings.paperStyle;
+      settingSoundToggle.checked = appSettings.soundEnabled;
+      settingHapticsToggle.checked = appSettings.hapticsEnabled;
+      settingWordGoalSelect.value = appSettings.wordGoal;
+      settingOpenSideSelect.value = appSettings.openSide;
+      settingPinToggle.checked = appSettings.pinEnabled;
+      pinSetupContainer.style.display = appSettings.pinEnabled ? "block" : "none";
+    }
+
+    // Setting change listeners
+    settingThemeSelect.addEventListener("change", () => {
+      appSettings.theme = settingThemeSelect.value;
+      saveSettings();
+    });
+
+    settingFontSelect.addEventListener("change", () => {
+      appSettings.font = settingFontSelect.value;
+      saveSettings();
+    });
+
+    settingFontSizeSelect.addEventListener("change", () => {
+      appSettings.fontSize = settingFontSizeSelect.value;
+      saveSettings();
+    });
+
+    settingPaperSelect.addEventListener("change", () => {
+      appSettings.paperStyle = settingPaperSelect.value;
+      saveSettings();
+    });
+
+    settingSoundToggle.addEventListener("change", () => {
+      appSettings.soundEnabled = settingSoundToggle.checked;
+      saveSettings();
+      playTactileSound('click');
+    });
+
+    settingHapticsToggle.addEventListener("change", () => {
+      appSettings.hapticsEnabled = settingHapticsToggle.checked;
+      saveSettings();
+      triggerHaptic(20);
+    });
+
+    settingWordGoalSelect.addEventListener("change", () => {
+      appSettings.wordGoal = parseInt(settingWordGoalSelect.value, 10);
+      saveSettings();
+      updateWordCount(journalTextarea.value);
+    });
+
+    settingOpenSideSelect.addEventListener("change", () => {
+      appSettings.openSide = settingOpenSideSelect.value;
+      saveSettings();
+    });
+
+    // PIN Lock Management
+    settingPinToggle.addEventListener("change", () => {
+      if (settingPinToggle.checked) {
+        if (!appSettings.pinHash) {
+          pinSetupContainer.style.display = "block";
+          inputNewPin.focus();
+        } else {
+          appSettings.pinEnabled = true;
+          saveSettings();
+        }
+      } else {
+        appSettings.pinEnabled = false;
+        pinSetupContainer.style.display = "none";
+        saveSettings();
+      }
+    });
+
+    btnSaveNewPin.addEventListener("click", () => {
+      const pin = inputNewPin.value.trim();
+      if (pin.length !== 4 || !/^\d{4}$/.test(pin)) {
+        alert("Please enter a valid 4-digit numeric passcode.");
+        return;
+      }
+      appSettings.pinHash = btoa("pin_" + pin);
+      appSettings.pinEnabled = true;
+      saveSettings();
+      inputNewPin.value = "";
+      alert("4-digit passcode successfully saved!");
+    });
+
+    btnLockNow.addEventListener("click", () => {
+      settingsModal.classList.remove("is-active");
+      showLockScreen();
+    });
+
+    function showLockScreen() {
+      if (!appSettings.pinEnabled || !appSettings.pinHash) return;
+      currentPinInput = "";
+      updateLockDots();
+      lockOverlay.classList.add("is-active");
+    }
+
+    function updateLockDots() {
+      lockDots.forEach((dot, idx) => {
+        if (idx < currentPinInput.length) dot.classList.add("filled");
+        else dot.classList.remove("filled");
+      });
+    }
+
+    document.querySelectorAll(".btn-numpad").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const num = btn.dataset.num;
+        playTactileSound('click');
+        if (num === 'clear') {
+          currentPinInput = "";
+        } else if (num === 'del') {
+          currentPinInput = currentPinInput.slice(0, -1);
+        } else if (/^\d$/.test(num)) {
+          if (currentPinInput.length < 4) {
+            currentPinInput += num;
+          }
+        }
+        updateLockDots();
+
+        if (currentPinInput.length === 4) {
+          setTimeout(() => {
+            const enteredHash = btoa("pin_" + currentPinInput);
+            if (enteredHash === appSettings.pinHash) {
+              lockOverlay.classList.remove("is-active");
+              currentPinInput = "";
+              updateLockDots();
+              playTactileSound('paper');
+            } else {
+              triggerHaptic(100);
+              alert("Incorrect PIN. Please try again.");
+              currentPinInput = "";
+              updateLockDots();
+            }
+          }, 120);
+        }
+      });
+    });
+
+    // Statistics Calculation
+    function updateStatsView() {
+      let totalWords = 0;
+      let totalEntries = 0;
+      const moodCounts = {};
+      const datesLogged = [];
+
+      for (const k in journalData) {
+        const item = journalData[k];
+        const text = (item.text || "").trim();
+        if (text || item.photo) {
+          totalEntries++;
+          if (text) {
+            totalWords += text.split(/\s+/).length;
+          }
+          if (item.mood) {
+            moodCounts[item.mood] = (moodCounts[item.mood] || 0) + 1;
+          }
+          datesLogged.push(k);
+        }
+      }
+
+      // Streak calculation
+      datesLogged.sort();
+      const uniqueDates = Array.from(new Set(datesLogged));
+      const todayKey = toDateKey(systemToday);
+      const yestDate = new Date(systemToday);
+      yestDate.setDate(yestDate.getDate() - 1);
+      const yestKey = toDateKey(yestDate);
+
+      let streak = 0;
+      let checkDate = uniqueDates.includes(todayKey) ? new Date(systemToday) : (uniqueDates.includes(yestKey) ? yestDate : null);
+
+      if (checkDate) {
+        let cur = new Date(checkDate);
+        while (uniqueDates.includes(toDateKey(cur))) {
+          streak++;
+          cur.setDate(cur.getDate() - 1);
+        }
+      }
+
+      // Top mood
+      let topMoodKey = "—";
+      let maxMoodCount = 0;
+      const moodMap = { calm: '😌 Calm', happy: '😊 Happy', neutral: '😐 Neutral', sad: '😔 Sad', angry: '😤 Frustrated', party: '🎉 Inspired' };
+      for (const m in moodCounts) {
+        if (moodCounts[m] > maxMoodCount) {
+          maxMoodCount = moodCounts[m];
+          topMoodKey = moodMap[m] || m;
+        }
+      }
+
+      document.getElementById("statStreak").textContent = streak;
+      document.getElementById("statTotalEntries").textContent = totalEntries;
+      document.getElementById("statTotalWords").textContent = totalWords.toLocaleString();
+      document.getElementById("statTopMood").textContent = topMoodKey;
+
+      // Local storage estimate
+      try {
+        const rawBytes = (localStorage.getItem(STORAGE_KEY) || "").length * 2;
+        const kb = (rawBytes / 1024).toFixed(1);
+        document.getElementById("statStorageSize").textContent = `${kb} KB stored locally on this device`;
+      } catch (e) {
+        document.getElementById("statStorageSize").textContent = `Local storage active`;
+      }
+    }
+
+    // Flashback to random memory
+    btnRandomMemory.addEventListener("click", () => {
+      const keysWithContent = Object.keys(journalData).filter(k => {
+        return (journalData[k].text && journalData[k].text.trim()) || journalData[k].photo;
+      });
+      if (keysWithContent.length === 0) {
+        alert("You don't have any journal entries with text or photos yet!");
+        return;
+      }
+      const randKey = keysWithContent[Math.floor(Math.random() * keysWithContent.length)];
+      currentDate = parseDateKey(randKey);
+      renderCard(true);
+      settingsModal.classList.remove("is-active");
+      playTactileSound('deal');
+    });
+
+    // Backup & Export Features (Migrated from bottom)
+    btnSettingsExportJSON.addEventListener("click", () => {
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(journalData, null, 2));
       const downloadAnchor = document.createElement("a");
       const todayStr = toDateKey(systemToday);
@@ -1860,9 +2921,12 @@
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
       downloadAnchor.remove();
+      playTactileSound('click');
     });
 
-    btnImportJSON.addEventListener("click", () => importFileInput.click());
+    btnSettingsImportJSON.addEventListener("click", () => {
+      importFileInput.click();
+    });
 
     importFileInput.addEventListener("change", () => {
       const file = importFileInput.files[0];
@@ -1875,17 +2939,19 @@
             journalData = Object.assign({}, journalData, parsed);
             saveData();
             renderCard();
+            updateStatsView();
             alert("Journal backup successfully imported!");
+            playTactileSound('paper');
           }
         } catch (err) {
-          alert("Error parsing backup JSON file.");
+          alert("Error parsing backup JSON file. Ensure it is valid JSON.");
         }
       };
       reader.readAsText(file);
       importFileInput.value = "";
     });
 
-    btnExportMarkdown.addEventListener("click", () => {
+    btnSettingsExportMarkdown.addEventListener("click", () => {
       let md = `# Daybook Journal Export\n*Exported on ${new Date().toLocaleDateString()}*\n\n---\n\n`;
       const keys = Object.keys(journalData).sort();
       keys.forEach(k => {
@@ -1908,17 +2974,73 @@
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
+      playTactileSound('click');
     });
 
+    btnSettingsExportText.addEventListener("click", () => {
+      let txt = `DAYBOOK JOURNAL ARCHIVE\nExported: ${new Date().toLocaleString()}\n${'='.repeat(40)}\n\n`;
+      const keys = Object.keys(journalData).sort();
+      keys.forEach(k => {
+        const item = journalData[k];
+        const dateObj = parseDateKey(k);
+        const formatted = formatDisplayDate(dateObj);
+        txt += `DATE: ${formatted.fullString}\n`;
+        if (item.quote) txt += `QUOTE: "${item.quote}" — ${item.author || 'Unknown'}\n`;
+        if (item.mood) txt += `MOOD: ${item.mood}\n`;
+        if (item.tags && item.tags.length > 0) txt += `TAGS: ${item.tags.map(t => '#' + t).join(', ')}\n`;
+        txt += `\n${item.text || '(No written entry)'}\n\n${'-'.repeat(40)}\n\n`;
+      });
+      const blob = new Blob([txt], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `daybook-journal-${toDateKey(systemToday)}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      playTactileSound('click');
+    });
+
+    btnClearAllData.addEventListener("click", () => {
+      const confirmFirst = confirm("Are you sure you want to delete ALL journal entries? This cannot be undone unless you have an exported JSON backup.");
+      if (confirmFirst) {
+        const confirmSecond = prompt("Type DELETE in capital letters to confirm erasing your journal:");
+        if (confirmSecond === "DELETE") {
+          journalData = {};
+          saveData();
+          getEntry(systemToday);
+          renderCard();
+          updateStatsView();
+          alert("All journal data has been erased.");
+        }
+      }
+    });
+
+    // Close Modals on Backdrop Click
     document.querySelectorAll(".modal-overlay").forEach(overlay => {
       overlay.addEventListener("click", (e) => {
-        if (e.target === overlay) overlay.classList.remove("is-active");
+        if (e.target === overlay && overlay !== lockOverlay) {
+          overlay.classList.remove("is-active");
+        }
       });
     });
 
+    // App Initialization
+    loadSettings();
+    applySettings();
     loadData();
     getEntry(systemToday);
+
+    if (appSettings.openSide === "back") {
+      cardEl.classList.add("is-flipped");
+    }
+
     renderCard();
+
+    if (appSettings.pinEnabled && appSettings.pinHash) {
+      showLockScreen();
+    }
   </script>
 </body>
 </html>
