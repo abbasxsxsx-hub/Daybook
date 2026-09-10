@@ -460,6 +460,36 @@
       overflow: visible;
     }
 
+    
+    .card-meta-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+    }
+    .card-meta-right {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .card-mood-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--terracotta-light);
+      border: 1px solid rgba(195, 89, 54, 0.22);
+      border-radius: 12px;
+      padding: 2px 7px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--terracotta);
+      font-weight: 500;
+      line-height: 1.2;
+    }
+    .weekday-dim {
+      color: var(--text-dim);
+    }
     .card-meta-top {
       display: flex;
       align-items: center;
@@ -1772,8 +1802,17 @@
           <!-- Front Face: Quote -->
           <section class="card-face card-front">
             <div class="card-meta-top">
-              <span class="badge-today" id="frontTodayBadge">TODAY</span>
-              <span class="date-display" id="frontDateText">Sep 10, 2026 · Thursday</span>
+              <div class="card-meta-left">
+                <span class="badge-today" id="frontTodayBadge">TODAY</span>
+                <span class="date-display" id="frontDateText">Sep 10, 2026</span>
+                <span class="date-display weekday-dim" id="frontWeekdayText">· Thursday</span>
+              </div>
+              <div class="card-meta-right">
+                <span class="card-mood-chip" id="frontMoodChip" style="display: none;">
+                  <span id="frontMoodEmoji">😊</span>
+                  <span id="frontMoodLabel">Happy</span>
+                </span>
+              </div>
             </div>
 
             <div class="quote-container">
@@ -1795,9 +1834,15 @@
           <!-- Back Face: Journal Entry -->
           <section class="card-face card-back">
             <div class="card-meta-top">
-              <span class="date-display" id="backDateText">Sep 10, 2026</span>
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <span class="date-display" id="backWeekdayText">Thursday</span>
+              <div class="card-meta-left">
+                <span class="date-display" id="backDateText">Sep 10, 2026</span>
+                <span class="date-display weekday-dim" id="backWeekdayText">· Thursday</span>
+              </div>
+              <div class="card-meta-right">
+                <span class="card-mood-chip" id="backMoodChip" style="display: none;">
+                  <span id="backMoodEmoji">😊</span>
+                  <span id="backMoodLabel">Happy</span>
+                </span>
                 <div class="save-indicator" id="saveIndicator">
                   <span>Saved</span>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -2752,6 +2797,13 @@
     const cardEl = document.getElementById("mainJournalCard");
     const stackLayer1 = document.getElementById("stackLayer1");
     const frontDateText = document.getElementById("frontDateText");
+    const frontWeekdayText = document.getElementById("frontWeekdayText");
+    const frontMoodChip = document.getElementById("frontMoodChip");
+    const frontMoodEmoji = document.getElementById("frontMoodEmoji");
+    const frontMoodLabel = document.getElementById("frontMoodLabel");
+    const backMoodChip = document.getElementById("backMoodChip");
+    const backMoodEmoji = document.getElementById("backMoodEmoji");
+    const backMoodLabel = document.getElementById("backMoodLabel");
     const backDateText = document.getElementById("backDateText");
     const backWeekdayText = document.getElementById("backWeekdayText");
     const frontTodayBadge = document.getElementById("frontTodayBadge");
@@ -2990,9 +3042,28 @@
       const moodWeekdaySuffix = moodInfo ? ` · ${moodInfo.emoji}` : '';
 
       frontTodayBadge.style.display = isToday ? "inline-block" : "none";
-      frontDateText.textContent = formatted.fullString + moodSuffix;
+      frontDateText.textContent = formatted.shortString;
+      if (frontWeekdayText) frontWeekdayText.textContent = `· ${formatted.weekday}`;
       backDateText.textContent = formatted.shortString;
-      backWeekdayText.textContent = formatted.weekday + moodWeekdaySuffix;
+      if (backWeekdayText) backWeekdayText.textContent = `· ${formatted.weekday}`;
+
+      // Mood Chip Display (separate badge on the right)
+      const moodInfo = moodMap[entry.mood];
+      if (moodInfo) {
+        if (frontMoodChip) {
+          frontMoodChip.style.display = "inline-flex";
+          frontMoodEmoji.textContent = moodInfo.emoji;
+          frontMoodLabel.textContent = moodInfo.label;
+        }
+        if (backMoodChip) {
+          backMoodChip.style.display = "inline-flex";
+          backMoodEmoji.textContent = moodInfo.emoji;
+          backMoodLabel.textContent = moodInfo.label;
+        }
+      } else {
+        if (frontMoodChip) frontMoodChip.style.display = "none";
+        if (backMoodChip) backMoodChip.style.display = "none";
+      }
 
       quoteTextDisplay.textContent = entry.quote || "No quote set.";
       quoteAuthorDisplay.textContent = entry.author ? `— ${entry.author}` : "";
@@ -3303,7 +3374,7 @@
       }, 350);
     });
 
-    // Mood Picker - Fully functional: feeds into journal entry, updates card headers & state
+    // Mood Picker - Selects mood, highlights button, shows chip on card, saves data (never adds to text)
     moodButtons.forEach(btn => {
       btn.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -3313,25 +3384,6 @@
 
         entry.mood = isDeselecting ? "" : selectedMood;
         entry.updatedAt = new Date().toISOString();
-
-        // Feed into journal textarea
-        if (!isDeselecting && moodMap[selectedMood]) {
-          const emoji = moodMap[selectedMood].emoji;
-          const textarea = journalTextarea;
-          const start = textarea.selectionStart || textarea.value.length;
-          const end = textarea.selectionEnd || textarea.value.length;
-          const val = textarea.value;
-
-          const prefix = (val.length > 0 && !val.endsWith(' ') && !val.endsWith('\n')) ? ' ' : '';
-          const insertStr = prefix + emoji + ' ';
-
-          textarea.value = val.substring(0, start) + insertStr + val.substring(end);
-          textarea.focus();
-          textarea.selectionStart = textarea.selectionEnd = start + insertStr.length;
-
-          entry.text = textarea.value;
-          updateWordCount(entry.text);
-        }
 
         playTactileSound('click');
         saveData();
