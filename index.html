@@ -10,6 +10,7 @@
   <meta name="description" content="A tactile, card-based daily journal saved locally on your device." />
   <title>Daybook — Tactile Card Journal</title>
 
+  <!-- PWA Manifest & Icons -->
   <link rel="manifest" href="manifest.json" />
   <link rel="apple-touch-icon" href="icon-192.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
@@ -106,7 +107,7 @@
       height: 100%;
       height: 100dvh;
       width: 100%;
-      overflow: hidden; /* Phone screen constraint: zero page scroll! */
+      overflow: hidden;
     }
 
     body {
@@ -224,7 +225,7 @@
       padding: 5px 8px;
     }
 
-    /* Top Glance & Interactive Week Strip (Filling top space with great utility) */
+    /* Top Glance & Interactive Week Strip */
     .top-glance-bar {
       width: 100%;
       max-width: 480px;
@@ -349,7 +350,7 @@
       background: #ffffff;
     }
 
-    /* Main Stage: Flex fills entire remaining height! */
+    /* Main Stage */
     main.stage-container {
       width: 100%;
       max-width: 480px;
@@ -358,7 +359,7 @@
       flex-direction: column;
       align-items: center;
       flex: 1;
-      min-height: 0; /* Flexbox responsive sizing */
+      min-height: 0;
     }
 
     .card-stack-viewport {
@@ -456,7 +457,7 @@
       transform: rotateY(180deg);
       z-index: 1;
       padding: 16px 16px 12px;
-      overflow: visible; /* Prevents format dropdown and tool popovers from being clipped */
+      overflow: visible;
     }
 
     .card-meta-top {
@@ -574,7 +575,7 @@
       color: var(--terracotta);
     }
 
-    /* Back Face Content: Expands cleanly in flexbox */
+    /* Back Face Content */
     .back-content-wrapper {
       display: flex;
       flex-direction: column;
@@ -758,20 +759,22 @@
 
     .mood-btn {
       background: none;
-      border: 1px solid transparent;
+      border: 1.5px solid transparent;
       font-size: 17px;
       cursor: pointer;
-      padding: 1px 3px;
-      border-radius: 6px;
-      transition: transform 0.15s, background 0.15s;
+      padding: 2px 4px;
+      border-radius: 8px;
+      transition: transform 0.15s, background 0.15s, border-color 0.15s, box-shadow 0.15s;
     }
     .mood-btn:hover {
       transform: scale(1.15);
+      background: rgba(0,0,0,0.03);
     }
     .mood-btn.is-selected {
       background: var(--terracotta-light);
       border-color: var(--terracotta);
       transform: scale(1.1);
+      box-shadow: 0 1px 4px rgba(195, 89, 54, 0.25);
     }
 
     .tags-row {
@@ -850,7 +853,7 @@
       background: rgba(0, 0, 0, 0.05);
     }
 
-    /* Clean, compact bottom navigation */
+    /* Bottom Navigation */
     .bottom-navigation {
       width: 100%;
       max-width: 480px;
@@ -1371,38 +1374,6 @@
       .btn-header { padding: 4px 6px; font-size: 10px; }
       header.app-header { padding: 8px 10px 4px; }
     }
-  
-    /* Quick Formatting Toolbar on Back Face */
-    .editor-format-bar {
-      display: flex;
-      align-items: center;
-      gap: 3px;
-      padding: 3px 0 5px;
-      overflow-x: auto;
-      scrollbar-width: none;
-      border-bottom: 1px dashed var(--border-card);
-      margin-bottom: 4px;
-      flex-shrink: 0;
-    }
-    .editor-format-bar::-webkit-scrollbar { display: none; }
-    .btn-format {
-      background: rgba(0, 0, 0, 0.03);
-      border: 1px solid var(--border-card);
-      border-radius: 5px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--text-muted);
-      padding: 3px 7px;
-      cursor: pointer;
-      line-height: 1;
-      white-space: nowrap;
-      transition: all 0.15s ease;
-    }
-    .btn-format:hover {
-      background: var(--terracotta-light);
-      color: var(--terracotta);
-      border-color: var(--terracotta);
-    }
 
     /* Index Filter Chips */
     .index-filters {
@@ -1482,7 +1453,7 @@
     /* Print View */
     @media print {
       body { background: #fff; color: #000; overflow: visible; height: auto; }
-      header.app-header, .top-glance-bar, .bottom-navigation, .action-tools-group, .btn-header, .btn-format, .modal-overlay, .pwa-banner { display: none !important; }
+      header.app-header, .top-glance-bar, .bottom-navigation, .action-tools-group, .btn-header, .btn-format, .modal-overlay, .pwa-banner, .btn-exit-zen { display: none !important; }
       .card-stack-viewport { height: auto; }
       .journal-card { box-shadow: none; border: 1px solid #ccc; transform: none !important; }
       .card-face.card-front { display: none; }
@@ -1490,7 +1461,6 @@
       .journal-textarea { overflow: visible; height: auto; }
     }
 
-  
     /* Zen Focus Fullscreen Mode */
     body.zen-mode header.app-header,
     body.zen-mode .top-glance-bar,
@@ -1518,15 +1488,29 @@
       box-shadow: none;
       padding: 20px 24px;
     }
-    .btn-format.is-active {
-      background: var(--terracotta);
-      color: #fff;
-      border-color: var(--terracotta);
+
+    /* Exit Zen Button (Allows returning from Zen mode on mobile) */
+    .btn-exit-zen {
+      display: none;
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 1000;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      color: var(--text-main);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 6px 11px;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: var(--shadow-card);
+    }
+    body.zen-mode .btn-exit-zen {
+      display: block;
     }
 
-  
-    
-    /* Custom Themed Dropdown Menus (Where downward arrow ▾ appears) */
+    /* Custom Themed Dropdown Menus */
     .custom-dropdown {
       position: relative;
       display: inline-block;
@@ -1682,8 +1666,7 @@
       background: rgba(0,0,0,0.015);
     }
 
-  
-    /* Format Dropdown: perfectly anchored upward, right-aligned to avoid right edge clipping */
+    /* Format Dropdown */
     #formatDropdown {
       position: relative;
     }
@@ -1705,14 +1688,17 @@
       padding: 7px 10px;
       font-size: 11px;
     }
-
   </style>
-    <!-- Firebase SDKs -->
+
+  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
+
+  <!-- Floating Exit Zen Button -->
+  <button class="btn-exit-zen" id="btnExitZen" type="button">✕ Exit Zen</button>
 
   <!-- PWA Install Banner -->
   <div class="pwa-banner" id="pwaBanner">
@@ -1756,6 +1742,10 @@
         <span class="pill-val" id="topWordsVal">0</span>
         <span>words</span>
       </div>
+      <div class="metric-pill" id="pillMoodGlance" title="Today's mood" style="display: none;">
+        <span id="topMoodEmoji">😊</span>
+        <span class="pill-val" id="topMoodVal">Happy</span>
+      </div>
       <div class="metric-pill" id="pillGoal" title="Word goal progress" style="display: none;">
         <span>🎯</span>
         <span class="pill-val" id="topGoalVal">0%</span>
@@ -1765,14 +1755,12 @@
     <!-- 7-Day Interactive Week Selector -->
     <div class="week-strip-wrap">
       <button class="btn-week-nav" id="btnWeekPrev" title="Previous week" type="button">‹</button>
-      <div class="week-strip-days" id="weekStripDays">
-        <!-- Dynamically rendered day chips -->
-      </div>
+      <div class="week-strip-days" id="weekStripDays"></div>
       <button class="btn-week-nav" id="btnWeekNext" title="Next week" type="button">›</button>
     </div>
   </div>
 
-  <!-- Main Card Stage (Expands to fill 100% of remaining phone height) -->
+  <!-- Main Card Stage -->
   <main class="stage-container">
     <div class="card-stack-viewport" id="cardViewport">
       <div class="stack-layer layer-2" id="stackLayer2"></div>
@@ -1820,7 +1808,6 @@
             </div>
 
             <div class="back-content-wrapper">
-              <!-- Decluttered spacious canvas: zero top clutter -->
               <div class="ruled-canvas-container style-ruled" id="canvasContainer">
                 <textarea 
                   class="journal-textarea" 
@@ -1885,7 +1872,7 @@
                   <span>📋 template</span>
                 </button>
 
-                <!-- Format Dropdown Menu (Opens upward from bottom toolbar) -->
+                <!-- Format Dropdown Menu -->
                 <div class="custom-dropdown" id="formatDropdown">
                   <button class="btn-text-action custom-dropdown-btn" style="min-width: auto; padding: 4px 6px; border: none; background: transparent;" type="button" title="Writing formatting">
                     <span>✦ format</span>
@@ -1915,7 +1902,7 @@
       </div>
     </div>
 
-    <!-- Clean Bottom Navigation Bar -->
+    <!-- Bottom Navigation Bar -->
     <nav class="bottom-navigation">
       <button class="nav-arrow" id="btnNewer" type="button">
         <span>‹ newer</span>
@@ -1931,7 +1918,7 @@
   <input type="file" id="photoFileInput" accept="image/*" />
   <input type="file" id="importFileInput" accept=".json,application/json" />
 
-  <!-- Full-Featured Settings Modal -->
+  <!-- Settings Modal -->
   <div class="modal-overlay" id="settingsModal">
     <div class="modal-card">
       <div class="modal-header">
@@ -1956,7 +1943,6 @@
 
         <!-- Tab 0: Cloud Sync -->
         <div class="settings-panel is-active" id="tab-cloud">
-          <!-- Live Status Banner -->
           <div style="background: rgba(0,0,0,0.03); border: 1px solid var(--border-card); border-radius: 12px; padding: 12px 14px; margin-bottom: 14px;">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
               <span style="font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; color: var(--text-dim);">Cloud Sync Status</span>
@@ -2034,7 +2020,6 @@
             </div>
           </div>
 
-          <!-- Conflict Protection & Safety -->
           <div class="settings-section-title" style="margin-top: 20px;">Conflict Protection & Safety</div>
           <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4; margin-bottom: 10px;">
             Daybook uses <strong>smart per-date timestamp reconciliation</strong>. Edits from different days merge seamlessly together. If the same day was edited on two devices, the newer revision is kept and an emergency local snapshot is automatically preserved.
@@ -2228,9 +2213,7 @@
           </div>
 
           <div class="settings-section-title" style="margin-top: 14px;">Mood Analytics</div>
-          <div class="mood-chart-wrap" id="moodChartWrap">
-            <!-- Mood bars rendered dynamically -->
-          </div>
+          <div class="mood-chart-wrap" id="moodChartWrap"></div>
 
           <div style="display: flex; gap: 8px; margin-top: 12px;">
             <button class="btn-action-block" id="btnRandomMemory" style="flex: 1;" type="button">
@@ -2423,8 +2406,7 @@
     </div>
   </div>
 
-  
-<!-- Template Picker Modal -->
+  <!-- Template Picker Modal -->
   <div class="modal-overlay" id="templateModal">
     <div class="modal-card" style="max-width: 420px;">
       <div class="modal-header">
@@ -2462,10 +2444,8 @@
       </div>
     </div>
   </div>
-  
-  </div>
 
-  <!-- Universal Theme-Matched Dialog (Replaces native alert / confirm / prompt / errors) -->
+  <!-- Universal Theme Dialog Modal -->
   <div class="modal-overlay" id="themeDialogModal" style="z-index: 10000;">
     <div class="theme-dialog-box">
       <div class="theme-dialog-header">
@@ -2488,19 +2468,12 @@
   </div>
 
   <script>
-        // Offline Service Worker registration
+    // Offline Service Worker registration
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-          .then((registration) => {
-            console.log('Service Worker registered:', registration.scope);
-          })
-          .catch((err) => {
-            console.error('Service Worker registration failed:', err);
-          });
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
       });
     }
-
 
     // Config & Preferences state
     const SETTINGS_KEY = "daybook_settings_v1";
@@ -2579,7 +2552,7 @@
       }
     }
 
-    let tactileVolume = 0.8; // Default 80% volume
+    let tactileVolume = 0.8;
 
     function playTactileSound(type = 'paper') {
       triggerHaptic(type === 'paper' ? 14 : 8);
@@ -2594,7 +2567,6 @@
         const vol = Math.max(0, Math.min(1, tactileVolume));
 
         if (type === 'paper') {
-          // Crisp mechanical paper rustle
           osc.type = 'triangle';
           osc.frequency.setValueAtTime(260, now);
           osc.frequency.exponentialRampToValueAtTime(70, now + 0.11);
@@ -2603,7 +2575,6 @@
           osc.start(now);
           osc.stop(now + 0.11);
         } else if (type === 'deal') {
-          // Satisfying card deck sliding / deal
           osc.type = 'sine';
           osc.frequency.setValueAtTime(360, now);
           osc.frequency.exponentialRampToValueAtTime(140, now + 0.13);
@@ -2612,7 +2583,6 @@
           osc.start(now);
           osc.stop(now + 0.13);
         } else {
-          // Soft mechanical woodblock tap
           osc.type = 'sine';
           osc.frequency.setValueAtTime(440, now);
           gain.gain.setValueAtTime(0.28 * vol, now);
@@ -2665,7 +2635,6 @@
       { text: "Live in the sunshine, swim the sea, drink the wild air.", author: "Ralph Waldo Emerson" }
     ];
 
-    // Curated Writing Prompts
     const WRITING_PROMPTS = [
       "What was the most peaceful or joyful moment of your day?",
       "What is one challenge you overcame or learned from today?",
@@ -2678,13 +2647,23 @@
       "What is something you are looking forward to this week?"
     ];
 
+    // Mood Map
+    const moodMap = {
+      party: { emoji: '🎉', label: 'Inspired' },
+      happy: { emoji: '😊', label: 'Happy' },
+      calm: { emoji: '😌', label: 'Calm' },
+      neutral: { emoji: '😐', label: 'Neutral' },
+      sad: { emoji: '😔', label: 'Sad' },
+      angry: { emoji: '😤', label: 'Frustrated' }
+    };
+
     // Data Storage
     const STORAGE_KEY = "daybook_card_journal_v1";
     let journalData = {};
     let currentDate = new Date();
     let systemToday = new Date();
     let calViewDate = new Date();
-    let weekViewAnchorDate = new Date(); // Anchor for the 7-day strip
+    let weekViewAnchorDate = new Date();
     let isTransitioning = false;
 
     function loadData() {
@@ -2793,21 +2772,23 @@
     const btnOlder = document.getElementById("btnOlder");
     const btnToday = document.getElementById("btnToday");
     const btnAddPhoto = document.getElementById("btnAddPhoto");
-    const btnInsertTime = document.getElementById("btnInsertTime");
-    const btnInspirationPrompt = document.getElementById("btnInspirationPrompt");
     const photoFileInput = document.getElementById("photoFileInput");
     const btnFlipToFront = document.getElementById("btnFlipToFront");
     const btnEditQuote = document.getElementById("btnEditQuote");
+    const btnExitZen = document.getElementById("btnExitZen");
 
     // Top Bar DOM
     const topStreakVal = document.getElementById("topStreakVal");
     const topWordsVal = document.getElementById("topWordsVal");
     const topGoalVal = document.getElementById("topGoalVal");
+    const pillMoodGlance = document.getElementById("pillMoodGlance");
+    const topMoodEmoji = document.getElementById("topMoodEmoji");
+    const topMoodVal = document.getElementById("topMoodVal");
     const weekStripDays = document.getElementById("weekStripDays");
     const btnWeekPrev = document.getElementById("btnWeekPrev");
     const btnWeekNext = document.getElementById("btnWeekNext");
 
-    // Modal elements
+    // Modals
     const indexModal = document.getElementById("indexModal");
     const btnOpenIndex = document.getElementById("btnOpenIndex");
     const btnCloseIndex = document.getElementById("btnCloseIndex");
@@ -2835,7 +2816,6 @@
     const calPrevMonth = document.getElementById("calPrevMonth");
     const calNextMonth = document.getElementById("calNextMonth");
 
-    // Settings elements
     const settingsModal = document.getElementById("settingsModal");
     const btnOpenSettings = document.getElementById("btnOpenSettings");
     const btnCloseSettings = document.getElementById("btnCloseSettings");
@@ -2860,7 +2840,6 @@
     const btnRandomMemory = document.getElementById("btnRandomMemory");
     const importFileInput = document.getElementById("importFileInput");
 
-    // Lock Screen elements
     const lockOverlay = document.getElementById("lockOverlay");
     const lockDots = document.querySelectorAll(".lock-dot");
     let currentPinInput = "";
@@ -2890,7 +2869,6 @@
         wordCountDisplay.textContent = `${words} word${words === 1 ? '' : 's'}`;
       }
 
-      // Update today's words in top glance bar if currently viewing today
       const todayEntry = journalData[toDateKey(systemToday)];
       const todayWords = (todayEntry && todayEntry.text && todayEntry.text.trim()) 
         ? todayEntry.text.trim().split(/\s+/).length 
@@ -2898,7 +2876,6 @@
       topWordsVal.textContent = todayWords;
     }
 
-    // Top Glance Bar: Streak and Stats
     function updateTopGlanceBar() {
       let streak = 0;
       const loggedDates = [];
@@ -2930,6 +2907,16 @@
         ? todayEntry.text.trim().split(/\s+/).length : 0;
       topWordsVal.textContent = todayWords;
 
+      // Update glance mood pill
+      const currentEntry = getEntry(currentDate);
+      if (currentEntry && currentEntry.mood && moodMap[currentEntry.mood]) {
+        topMoodEmoji.textContent = moodMap[currentEntry.mood].emoji;
+        topMoodVal.textContent = moodMap[currentEntry.mood].label;
+        pillMoodGlance.style.display = "inline-flex";
+      } else {
+        pillMoodGlance.style.display = "none";
+      }
+
       const goal = parseInt(appSettings.wordGoal, 10) || 0;
       if (goal > 0) {
         const pct = Math.min(Math.round((todayWords / goal) * 100), 100);
@@ -2937,12 +2924,10 @@
       }
     }
 
-    // Interactive 7-day week strip at the top
     function renderWeekStrip() {
       weekStripDays.innerHTML = "";
-      // Calculate Monday of the anchor week
       const anchor = new Date(weekViewAnchorDate);
-      const dayOfWeek = (anchor.getDay() + 6) % 7; // Monday = 0, Sunday = 6
+      const dayOfWeek = (anchor.getDay() + 6) % 7;
       const monday = new Date(anchor);
       monday.setDate(anchor.getDate() - dayOfWeek);
 
@@ -2999,10 +2984,15 @@
       const isToday = isSameDay(currentDate, systemToday);
       const formatted = formatDisplayDate(currentDate);
 
+      // Mood display integration
+      const moodInfo = moodMap[entry.mood];
+      const moodSuffix = moodInfo ? ` · ${moodInfo.emoji} ${moodInfo.label}` : '';
+      const moodWeekdaySuffix = moodInfo ? ` · ${moodInfo.emoji}` : '';
+
       frontTodayBadge.style.display = isToday ? "inline-block" : "none";
-      frontDateText.textContent = formatted.fullString;
+      frontDateText.textContent = formatted.fullString + moodSuffix;
       backDateText.textContent = formatted.shortString;
-      backWeekdayText.textContent = formatted.weekday;
+      backWeekdayText.textContent = formatted.weekday + moodWeekdaySuffix;
 
       quoteTextDisplay.textContent = entry.quote || "No quote set.";
       quoteAuthorDisplay.textContent = entry.author ? `— ${entry.author}` : "";
@@ -3025,7 +3015,6 @@
       renderTags(entry.tags || []);
       updateNavigationControls();
 
-      // Sync week strip anchor to viewed card date
       weekViewAnchorDate = new Date(currentDate);
       renderWeekStrip();
       updateTopGlanceBar();
@@ -3055,7 +3044,7 @@
       btnNewer.disabled = isFutureOrToday;
     }
 
-    // Touch & Swipe interaction on Card
+    // Touch & Swipe Drag Interaction
     const cardViewport = document.getElementById("cardViewport");
     let startX = 0;
     let startY = 0;
@@ -3068,11 +3057,9 @@
 
     function handleDragStart(clientX, clientY, target) {
       if (isTransitioning) return false;
-      // Do not initiate card drag on buttons, inputs, tags, or quote edit
-      if (target.closest("button, input, .remove-tag, .btn-edit-quote, #settingThemeSelect, .mood-btn")) {
+      if (target.closest("button, input, .remove-tag, .btn-edit-quote, #settingThemeSelect, .mood-btn, .custom-dropdown")) {
         return false;
       }
-      // If on back face and focusing textarea, allow typing
       const isFlipped = cardEl.classList.contains("is-flipped");
       if (isFlipped && target.closest(".journal-textarea") && document.activeElement === journalTextarea) {
         return false;
@@ -3097,7 +3084,6 @@
       const diffX = currentX - startX;
       const diffY = currentY - startY;
 
-      // Lock to horizontal gesture if moving sideways
       if (!isHorizontalGesture && Math.abs(diffX) > 5) {
         if (Math.abs(diffX) >= Math.abs(diffY)) {
           isHorizontalGesture = true;
@@ -3111,7 +3097,7 @@
       const isFutureOrToday = isSameDay(currentDate, systemToday) || currentDate > systemToday;
       let effectiveX = diffX;
       if (diffX > 0 && isFutureOrToday) {
-        effectiveX = diffX * 0.22; // Resistance when attempting to drag into future
+        effectiveX = diffX * 0.22;
       }
 
       const rotateDeg = effectiveX * 0.05;
@@ -3134,7 +3120,6 @@
 
       stackLayer1.style.transform = "translateY(6px) rotate(1.4deg) scale(0.99)";
 
-      // Tap detection (< 10px travel, short duration)
       if (dist < 10 && duration < 320) {
         cardEl.classList.toggle("is-flipped");
         playTactileSound('paper');
@@ -3146,14 +3131,12 @@
         return;
       }
 
-      // Responsive swipe detection (works reliably with flicks or deliberate drags)
       const isSwipe = (Math.abs(diffX) > 38 && Math.abs(diffX) > Math.abs(diffY)) || 
                       (velocity > 0.22 && Math.abs(diffX) > 22);
       const isFutureOrToday = isSameDay(currentDate, systemToday) || currentDate > systemToday;
 
       if (isSwipe) {
         if (diffX < 0) {
-          // Swipe Left -> Older Day (Yesterday)
           animateCardSlide('left', () => {
             const prev = new Date(currentDate);
             prev.setDate(prev.getDate() - 1);
@@ -3163,7 +3146,6 @@
           return;
         } else if (diffX > 0) {
           if (!isFutureOrToday) {
-            // Swipe Right -> Newer Day (Tomorrow)
             animateCardSlide('right', () => {
               const next = new Date(currentDate);
               next.setDate(next.getDate() + 1);
@@ -3172,18 +3154,15 @@
             });
             return;
           } else {
-            // Already at today: bounce back with haptic feedback
             triggerHaptic(25);
           }
         }
       }
 
-      // Snap back if threshold not met
       cardWrapper.style.transition = "transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
       cardWrapper.style.transform = "translate3d(0, 0, 0) rotate(0deg)";
     }
 
-    // Touch Event Handlers for Mobile (with non-passive touchmove for zero cancellation)
     cardViewport.addEventListener("touchstart", (e) => {
       if (e.touches.length === 1) {
         handleDragStart(e.touches[0].clientX, e.touches[0].clientY, e.target);
@@ -3204,9 +3183,8 @@
       if (isDragging) handleDragEnd();
     }, { passive: true });
 
-    // Pointer Event Handlers for Desktop Mouse Drag
     cardViewport.addEventListener("pointerdown", (e) => {
-      if (e.pointerType === 'touch') return; // Handled by touch events on mobile
+      if (e.pointerType === 'touch') return;
       if (handleDragStart(e.clientX, e.clientY, e.target)) {
         activePointerId = e.pointerId;
         try { cardWrapper.setPointerCapture(e.pointerId); } catch(err) {}
@@ -3241,7 +3219,6 @@
       isTransitioning = true;
       playTactileSound('deal');
 
-      // Safety timeout so transitions can never permanently freeze
       const safetyReset = setTimeout(() => { isTransitioning = false; }, 800);
 
       const flyOutX = direction === 'left' ? -500 : 500;
@@ -3326,70 +3303,36 @@
       }, 350);
     });
 
-    // Quick Insert Timestamp
-    if (btnInsertTime) btnInsertTime.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const now = new Date();
-      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      const stamp = `\n[${timeStr}] `;
-      
-      const start = journalTextarea.selectionStart;
-      const end = journalTextarea.selectionEnd;
-      const val = journalTextarea.value;
-      
-      journalTextarea.value = val.substring(0, start) + stamp + val.substring(end);
-      journalTextarea.focus();
-      journalTextarea.selectionStart = journalTextarea.selectionEnd = start + stamp.length;
-      
-      const entry = getEntry(currentDate);
-      entry.text = journalTextarea.value;
-      entry.updatedAt = new Date().toISOString();
-      updateWordCount(entry.text);
-      saveData();
-      playTactileSound('click');
-    });
-
-    // Writing Prompt Modal
-    if (btnInspirationPrompt) btnInspirationPrompt.addEventListener("click", (e) => {
-      e.stopPropagation();
-      showRandomPrompt();
-      promptModal.classList.add("is-active");
-      playTactileSound('click');
-    });
-
-    function showRandomPrompt() {
-      const prompt = WRITING_PROMPTS[Math.floor(Math.random() * WRITING_PROMPTS.length)];
-      promptDisplayText.textContent = `"${prompt}"`;
-    }
-
-    if (btnAnotherPrompt) btnAnotherPrompt.addEventListener("click", () => {
-      showRandomPrompt();
-      playTactileSound('click');
-    });
-
-    if (btnInsertPromptToText) btnInsertPromptToText.addEventListener("click", () => {
-      const promptText = promptDisplayText.textContent.replace(/^"|"$/g, '');
-      const stamp = `\n\n✦ Prompt: ${promptText}\n`;
-      journalTextarea.value += stamp;
-      journalTextarea.focus();
-      
-      const entry = getEntry(currentDate);
-      entry.text = journalTextarea.value;
-      entry.updatedAt = new Date().toISOString();
-      updateWordCount(entry.text);
-      saveData();
-      promptModal.classList.remove("is-active");
-      playTactileSound('paper');
-    });
-
-    if (btnClosePrompt) btnClosePrompt.addEventListener("click", () => promptModal.classList.remove("is-active"));
-
-    // Mood picker
+    // Mood Picker - Fully functional: feeds into journal entry, updates card headers & state
     moodButtons.forEach(btn => {
       btn.addEventListener("click", (e) => {
         e.stopPropagation();
+        const selectedMood = btn.dataset.mood;
         const entry = getEntry(currentDate);
-        entry.mood = (entry.mood === btn.dataset.mood) ? "" : btn.dataset.mood;
+        const isDeselecting = (entry.mood === selectedMood);
+
+        entry.mood = isDeselecting ? "" : selectedMood;
+        entry.updatedAt = new Date().toISOString();
+
+        // Feed into journal textarea
+        if (!isDeselecting && moodMap[selectedMood]) {
+          const emoji = moodMap[selectedMood].emoji;
+          const textarea = journalTextarea;
+          const start = textarea.selectionStart || textarea.value.length;
+          const end = textarea.selectionEnd || textarea.value.length;
+          const val = textarea.value;
+
+          const prefix = (val.length > 0 && !val.endsWith(' ') && !val.endsWith('\n')) ? ' ' : '';
+          const insertStr = prefix + emoji + ' ';
+
+          textarea.value = val.substring(0, start) + insertStr + val.substring(end);
+          textarea.focus();
+          textarea.selectionStart = textarea.selectionEnd = start + insertStr.length;
+
+          entry.text = textarea.value;
+          updateWordCount(entry.text);
+        }
+
         playTactileSound('click');
         saveData();
         renderCard();
@@ -3406,6 +3349,7 @@
           if (!entry.tags) entry.tags = [];
           if (!entry.tags.includes(val)) {
             entry.tags.push(val);
+            entry.updatedAt = new Date().toISOString();
             saveData();
             renderTags(entry.tags);
           }
@@ -3420,6 +3364,7 @@
         const entry = getEntry(currentDate);
         if (entry.tags && entry.tags[idx] !== undefined) {
           entry.tags.splice(idx, 1);
+          entry.updatedAt = new Date().toISOString();
           saveData();
           renderTags(entry.tags);
         }
@@ -3452,6 +3397,7 @@
       e.stopPropagation();
       const entry = getEntry(currentDate);
       entry.photo = null;
+      entry.updatedAt = new Date().toISOString();
       saveData();
       renderCard();
     });
@@ -3465,6 +3411,9 @@
 
       if (e.key === "ArrowLeft") btnOlder.click();
       else if (e.key === "ArrowRight" && !btnNewer.disabled) btnNewer.click();
+      else if (e.key === "Escape" && document.body.classList.contains("zen-mode")) {
+        document.body.classList.remove("zen-mode");
+      }
       else if (e.key === " " || e.key === "f") {
         e.preventDefault();
         cardEl.classList.toggle("is-flipped");
@@ -3530,15 +3479,13 @@
 
         if (term && !textMatches && !quoteMatches && !tagMatches && !dateMatches) return;
 
-        // Filter chips evaluation
         if (currentIndexFilter === "photo" && !item.photo) return;
         if (["calm", "happy", "party", "neutral", "sad", "angry"].includes(currentIndexFilter) && item.mood !== currentIndexFilter) return;
         matchedCount++;
         const el = document.createElement("div");
         el.className = "index-entry-item";
         const preview = item.text ? item.text.trim().substring(0, 75) : "— blank —";
-        const moodMap = { calm: '😌', happy: '😊', neutral: '😐', sad: '😔', angry: '😤', party: '🎉' };
-        const moodDisplay = item.mood ? (moodMap[item.mood] || '') : '';
+        const moodDisplay = item.mood && moodMap[item.mood] ? ` ${moodMap[item.mood].emoji}` : '';
         const photoBadge = item.photo ? ' 📷' : '';
 
         el.innerHTML = `
@@ -3673,7 +3620,6 @@
       syncAllCustomSelectTriggers();
     }
 
-    // Setting change listeners
     settingThemeSelect.addEventListener("change", () => {
       appSettings.theme = settingThemeSelect.value;
       saveSettings();
@@ -3842,11 +3788,10 @@
 
       let topMoodKey = "—";
       let maxMoodCount = 0;
-      const moodMap = { calm: '😌 Calm', happy: '😊 Happy', neutral: '😐 Neutral', sad: '😔 Sad', angry: '😤 Frustrated', party: '🎉 Inspired' };
       for (const m in moodCounts) {
         if (moodCounts[m] > maxMoodCount) {
           maxMoodCount = moodCounts[m];
-          topMoodKey = moodMap[m] || m;
+          topMoodKey = moodMap[m] ? `${moodMap[m].emoji} ${moodMap[m].label}` : m;
         }
       }
 
@@ -3855,30 +3800,21 @@
       document.getElementById("statTotalWords").textContent = totalWords.toLocaleString();
       document.getElementById("statTopMood").textContent = topMoodKey;
 
-      // Render Visual Mood Distribution Chart
       const moodChartWrap = document.getElementById("moodChartWrap");
       if (moodChartWrap) {
         moodChartWrap.innerHTML = "";
-        const moodLabels = {
-          party: "🎉 Great",
-          happy: "😊 Happy",
-          calm: "😌 Calm",
-          neutral: "😐 Neutral",
-          sad: "😔 Sad",
-          angry: "😤 Frustrated"
-        };
         const totalMoodEntries = Object.values(moodCounts).reduce((a, b) => a + b, 0);
 
         if (totalMoodEntries === 0) {
           moodChartWrap.innerHTML = '<div style="font-size: 11px; color: var(--text-dim); font-family: var(--font-mono); text-align: center;">Log daily moods to see emotion trends</div>';
         } else {
-          for (const m in moodLabels) {
+          for (const m in moodMap) {
             const count = moodCounts[m] || 0;
             const pct = Math.round((count / totalMoodEntries) * 100);
             const row = document.createElement("div");
             row.className = "mood-bar-row";
             row.innerHTML = `
-              <span class="mood-bar-label">${moodLabels[m].split(' ')[0]} ${m}</span>
+              <span class="mood-bar-label">${moodMap[m].emoji} ${moodMap[m].label}</span>
               <div class="mood-bar-track">
                 <div class="mood-bar-fill" style="width: ${pct}%;"></div>
               </div>
@@ -3898,7 +3834,6 @@
       }
     }
 
-    // Flashback to random memory
     btnRandomMemory.addEventListener("click", () => {
       const keysWithContent = Object.keys(journalData).filter(k => {
         return (journalData[k].text && journalData[k].text.trim()) || journalData[k].photo;
@@ -3914,7 +3849,6 @@
       playTactileSound('deal');
     });
 
-    // Backup & Export Features
     btnSettingsExportJSON.addEventListener("click", () => {
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(journalData, null, 2));
       const downloadAnchor = document.createElement("a");
@@ -3963,7 +3897,7 @@
         const formatted = formatDisplayDate(dateObj);
         md += `## ${formatted.fullString}\n\n`;
         if (item.quote) md += `> "${item.quote}"\n> — ${item.author || 'Unknown'}\n\n`;
-        if (item.mood) md += `**Mood:** ${item.mood}\n\n`;
+        if (item.mood && moodMap[item.mood]) md += `**Mood:** ${moodMap[item.mood].emoji} ${moodMap[item.mood].label}\n\n`;
         if (item.tags && item.tags.length > 0) md += `**Tags:** ${item.tags.map(t => '#' + t).join(' ')}\n\n`;
         if (item.text) md += `${item.text}\n\n`;
         md += `---\n\n`;
@@ -3989,7 +3923,7 @@
         const formatted = formatDisplayDate(dateObj);
         txt += `DATE: ${formatted.fullString}\n`;
         if (item.quote) txt += `QUOTE: "${item.quote}" — ${item.author || 'Unknown'}\n`;
-        if (item.mood) txt += `MOOD: ${item.mood}\n`;
+        if (item.mood && moodMap[item.mood]) txt += `MOOD: ${moodMap[item.mood].emoji} ${moodMap[item.mood].label}\n`;
         if (item.tags && item.tags.length > 0) txt += `TAGS: ${item.tags.map(t => '#' + t).join(', ')}\n`;
         txt += `\n${item.text || '(No written entry)'}\n\n${'-'.repeat(40)}\n\n`;
       });
@@ -4020,7 +3954,6 @@
       }
     });
 
-    // Close Modals on Backdrop Click
     document.querySelectorAll(".modal-overlay").forEach(overlay => {
       overlay.addEventListener("click", (e) => {
         if (e.target === overlay && overlay !== lockOverlay) {
@@ -4029,10 +3962,7 @@
       });
     });
 
-    
-    // ===================================================
-    // Firebase Auth & Cloud Firestore Sync Engine
-    // ===================================================
+    // Firebase Auth & Cloud Sync Engine
     const firebaseConfig = {
       apiKey: "AIzaSyA17YBnzDl2AEQFujwUjAowDl8bgPVysD0",
       authDomain: "daybook-f783a.firebaseapp.com",
@@ -4048,7 +3978,7 @@
     let currentUser = null;
     let syncInProgress = false;
     let autoSyncTimeout = null;
-    let authMode = "login"; // "login" or "signup"
+    let authMode = "login";
 
     const SYNC_SNAPSHOT_KEY = "daybook_pre_sync_snapshot_v4";
     const SYNC_SETTINGS_KEY = "daybook_sync_settings_v4";
@@ -4070,7 +4000,6 @@
       } catch (e) {}
     }
 
-    // Initialize Firebase
     try {
       if (typeof firebase !== 'undefined') {
         if (!firebase.apps.length) {
@@ -4084,7 +4013,6 @@
       console.error("Firebase init error", e);
     }
 
-    // Per-date Smart Reconciliation (Prevents mix-ups between devices)
     function mergeJournalDatasets(localData, remoteData) {
       const merged = Object.assign({}, remoteData);
       let localUpdates = 0;
@@ -4112,6 +4040,9 @@
             if (!merged[dateKey].photo && localEntry.photo) {
               merged[dateKey].photo = localEntry.photo;
             }
+            if (!merged[dateKey].mood && localEntry.mood) {
+              merged[dateKey].mood = localEntry.mood;
+            }
             const combinedTags = Array.from(new Set([...(localEntry.tags || []), ...(remoteEntry.tags || [])]));
             merged[dateKey].tags = combinedTags;
           }
@@ -4120,7 +4051,6 @@
       return { merged, localUpdates, remoteUpdates };
     }
 
-    // Firestore Sync Handler
     async function syncWithFirestore(isManual = false) {
       if (!currentUser || !fbDb) return;
       if (syncInProgress) return;
@@ -4128,7 +4058,6 @@
       updateSyncUI();
 
       try {
-        // 1. Take safety pre-sync snapshot
         try {
           localStorage.setItem(SYNC_SNAPSHOT_KEY, JSON.stringify(journalData));
         } catch (err) {}
@@ -4144,12 +4073,10 @@
           }
         }
 
-        // 2. Reconcile datasets by date and timestamp
         const { merged } = mergeJournalDatasets(journalData, remoteData);
         journalData = merged;
         localStorage.setItem(STORAGE_KEY, JSON.stringify(journalData));
 
-        // 3. Write back merged journal to Firestore
         await docRef.set({
           entries: merged,
           lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
@@ -4218,7 +4145,6 @@
         return;
       }
 
-      // User is logged in
       if (loggedOutBox) loggedOutBox.style.display = "none";
       if (loggedInBox) loggedInBox.style.display = "block";
       if (btnTriggerManualSync) btnTriggerManualSync.style.display = "flex";
@@ -4273,7 +4199,6 @@
       if (alertBox) alertBox.style.display = "none";
     }
 
-    // Firebase Auth Listeners & Setup
     function setupFirebaseAuth() {
       if (!fbAuth) return;
 
@@ -4281,7 +4206,6 @@
         currentUser = user;
         updateSyncUI();
         if (user) {
-          // Automatic initial sync upon sign in
           syncWithFirestore(false);
         }
       });
@@ -4425,11 +4349,20 @@
       }
     }
 
-    
-    // ==========================================
-    // Quick Text Formatting Toolbar
-    // ==========================================
+    // Formatting Toolbar Engine
     function applyTextFormat(formatType) {
+      if (formatType === "template") {
+        if (templateModal) templateModal.classList.add("is-active");
+        playTactileSound('click');
+        return;
+      }
+      if (formatType === "zen") {
+        document.body.classList.toggle("zen-mode");
+        playTactileSound('click');
+        return;
+      }
+      if (formatType === "voice") return;
+
       const textarea = journalTextarea;
       const start = textarea.selectionStart;
       const end = textarea.selectionEnd;
@@ -4488,16 +4421,12 @@
       playTactileSound('click');
     }
 
-    document.querySelectorAll(".btn-format").forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        applyTextFormat(btn.dataset.format);
-      });
+    btnExitZen.addEventListener("click", () => {
+      document.body.classList.remove("zen-mode");
+      playTactileSound('click');
     });
 
-    // ==========================================
     // Index Modal Search & Filter Chips
-    // ==========================================
     let currentIndexFilter = "all";
     const indexFilterChips = document.querySelectorAll("#indexFilterChips .filter-chip");
 
@@ -4511,9 +4440,7 @@
       });
     });
 
-    // ==========================================
-    // Procedural Offline Ambient Soundscapes (Web Audio)
-    // ==========================================
+    // Procedural Ambient Soundscapes
     let ambientNode = null;
     let ambientGain = null;
     let ambientVolume = 0.65;
@@ -4557,7 +4484,6 @@
         } else if (type === "waves") {
           filter.type = "bandpass";
           filter.frequency.setValueAtTime(480, now);
-          // Modulate wave swell
           const lfo = audioCtx.createOscillator();
           const lfoGain = audioCtx.createGain();
           lfo.frequency.setValueAtTime(0.2, now);
@@ -4565,7 +4491,6 @@
           lfo.connect(filter.frequency);
           lfo.start(now);
         } else {
-          // Campfire crackle
           filter.type = "lowpass";
           filter.frequency.setValueAtTime(800, now);
         }
@@ -4598,7 +4523,6 @@
       });
     }
 
-    // Volume Sliders
     const settingTactileVol = document.getElementById("settingTactileVol");
     const tactileVolLabel = document.getElementById("tactileVolLabel");
     if (settingTactileVol && tactileVolLabel) {
@@ -4607,7 +4531,7 @@
         tactileVolLabel.textContent = `Volume: ${settingTactileVol.value}%`;
       });
       settingTactileVol.addEventListener("change", () => {
-        playTactileSound('paper'); // Live audio preview
+        playTactileSound('paper');
       });
     }
 
@@ -4623,9 +4547,7 @@
       });
     }
 
-    // ==========================================
-    // Voice-to-Text Dictation
-    // ==========================================
+    // Voice Dictation
     const btnVoiceDictate = document.getElementById("btnVoiceDictate");
     let recognition = null;
     let isDictating = false;
@@ -4703,9 +4625,7 @@
       });
     }
 
-    // ==========================================
-    // Structured Journaling Templates
-    // ==========================================
+    // Templates
     const templateModal = document.getElementById("templateModal");
     const btnCloseTemplate = document.getElementById("btnCloseTemplate");
 
@@ -4752,25 +4672,6 @@
       });
     });
 
-    // Update applyTextFormat to handle 'template' and 'zen'
-    const origApplyFormat = applyTextFormat;
-    applyTextFormat = function(formatType) {
-      if (formatType === "template") {
-        if (templateModal) templateModal.classList.add("is-active");
-        playTactileSound('click');
-        return;
-      }
-      if (formatType === "zen") {
-        document.body.classList.toggle("zen-mode");
-        const zenBtn = document.querySelector('.btn-format[data-format="zen"]');
-        if (zenBtn) zenBtn.classList.toggle("is-active");
-        playTactileSound('click');
-        return;
-      }
-      if (formatType === "voice") return; // Handled by btnVoiceDictate
-      origApplyFormat(formatType);
-    };
-
     const btnPrintJournal = document.getElementById("btnPrintJournal");
     if (btnPrintJournal) {
       btnPrintJournal.addEventListener("click", () => {
@@ -4778,11 +4679,7 @@
       });
     }
 
-
-    
-    // =========================================================================
-    // Themed Dropdown Menus (Wherever there is a downward arrow ▾)
-    // =========================================================================
+    // Custom Dropdown Menus
     function closeAllCustomDropdowns() {
       document.querySelectorAll(".custom-dropdown").forEach(dd => {
         dd.classList.remove("is-open");
@@ -4791,7 +4688,6 @@
       });
     }
 
-    // Global click listener to close open dropdowns when tapping outside
     document.addEventListener("click", (e) => {
       if (!e.target.closest(".custom-dropdown")) {
         closeAllCustomDropdowns();
@@ -4799,7 +4695,6 @@
     });
 
     function initCustomDropdowns() {
-      // 1. Transform all native <select> elements into custom themed dropdowns
       document.querySelectorAll("select").forEach(sel => {
         sel.style.display = "none";
         const parent = sel.parentElement;
@@ -4814,7 +4709,6 @@
           const selectedOpt = sel.options[sel.selectedIndex] || sel.options[0];
           const label = selectedOpt ? selectedOpt.text : "";
 
-          // Dropdown trigger button (has downward chevron ▾)
           const btn = document.createElement("button");
           btn.type = "button";
           btn.className = "custom-dropdown-btn";
@@ -4825,7 +4719,6 @@
             </svg>
           `;
 
-          // Dropdown menu (unfolds directly below)
           const menu = document.createElement("div");
           menu.className = "custom-dropdown-menu";
 
@@ -4866,7 +4759,6 @@
         }
       });
 
-      // 2. Setup Format Dropdown on writing canvas
       const formatDropdown = document.getElementById("formatDropdown");
       if (formatDropdown) {
         const formatBtn = formatDropdown.querySelector(".custom-dropdown-btn");
@@ -4916,7 +4808,34 @@
       });
     }
 
-    // Universal Themed Dialog Modal (Replaces native browser popups & errors)
+    // Prompt & Dialog Engine
+    function showRandomPrompt() {
+      const prompt = WRITING_PROMPTS[Math.floor(Math.random() * WRITING_PROMPTS.length)];
+      promptDisplayText.textContent = `"${prompt}"`;
+    }
+
+    if (btnAnotherPrompt) btnAnotherPrompt.addEventListener("click", () => {
+      showRandomPrompt();
+      playTactileSound('click');
+    });
+
+    if (btnInsertPromptToText) btnInsertPromptToText.addEventListener("click", () => {
+      const promptText = promptDisplayText.textContent.replace(/^"|"$/g, '');
+      const stamp = `\n\n✦ Prompt: ${promptText}\n`;
+      journalTextarea.value += stamp;
+      journalTextarea.focus();
+      
+      const entry = getEntry(currentDate);
+      entry.text = journalTextarea.value;
+      entry.updatedAt = new Date().toISOString();
+      updateWordCount(entry.text);
+      saveData();
+      promptModal.classList.remove("is-active");
+      playTactileSound('paper');
+    });
+
+    if (btnClosePrompt) btnClosePrompt.addEventListener("click", () => promptModal.classList.remove("is-active"));
+
     function showThemedDialog({ title = "Daybook", message = "", icon = "✨", type = "alert", defaultValue = "", isDanger = false }) {
       return new Promise((resolve) => {
         const modal = document.getElementById("themeDialogModal");
@@ -4988,7 +4907,6 @@
     window.themedAlert = (msg, title = "Daybook", icon = "ℹ️") => showThemedDialog({ title, message: msg, icon, type: "alert" });
     window.themedConfirm = (msg, title = "Confirmation", isDanger = false) => showThemedDialog({ title, message: msg, icon: isDanger ? "⚠️" : "❓", type: "confirm", isDanger });
     window.themedPrompt = (msg, def = "", title = "Daybook") => showThemedDialog({ title, message: msg, icon: "✏️", type: "prompt", defaultValue: def });
-
 
     // App Initialization
     loadSyncSettings();
