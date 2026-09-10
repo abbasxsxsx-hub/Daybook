@@ -365,7 +365,9 @@
       position: relative;
       flex: 1;
       min-height: 0;
-      touch-action: pan-y;
+      touch-action: none !important;
+      -webkit-user-select: none;
+      user-select: none;
     }
 
     .stack-layer {
@@ -404,6 +406,7 @@
       will-change: transform, opacity;
       cursor: grab;
       user-select: none;
+      touch-action: none !important;
     }
     .journal-card-wrapper.is-dragging {
       cursor: grabbing;
@@ -417,6 +420,7 @@
       transition: transform 0.65s cubic-bezier(0.34, 1.25, 0.64, 1);
       border-radius: 18px;
       box-shadow: var(--shadow-card);
+      touch-action: none !important;
     }
 
     .journal-card.is-flipped {
@@ -2461,80 +2465,104 @@
     }
 
     // Touch & Swipe interaction on Card
+    const cardViewport = document.getElementById("cardViewport");
     let startX = 0;
     let startY = 0;
     let currentX = 0;
     let currentY = 0;
     let isDragging = false;
-    let pointerId = null;
+    let isHorizontalGesture = false;
     let startTime = 0;
+    let activePointerId = null;
 
-    cardWrapper.addEventListener("pointerdown", (e) => {
-      if (isTransitioning) return;
-      if (e.target.closest("textarea, input, button, .tag-chip, .btn-remove-photo")) return;
+    function handleDragStart(clientX, clientY, target) {
+      if (isTransitioning) return false;
+      // Do not initiate card drag on buttons, inputs, tags, or quote edit
+      if (target.closest("button, input, .remove-tag, .btn-edit-quote, #settingThemeSelect, .mood-btn")) {
+        return false;
+      }
+      // If on back face and focusing textarea, allow typing
+      const isFlipped = cardEl.classList.contains("is-flipped");
+      if (isFlipped && target.closest(".journal-textarea") && document.activeElement === journalTextarea) {
+        return false;
+      }
 
-      startX = e.clientX;
-      startY = e.clientY;
+      startX = clientX;
+      startY = clientY;
       currentX = startX;
       currentY = startY;
       isDragging = true;
-      pointerId = e.pointerId;
+      isHorizontalGesture = false;
       startTime = Date.now();
-      cardWrapper.setPointerCapture(e.pointerId);
       cardWrapper.classList.add("is-dragging");
       cardWrapper.style.transition = "none";
-    });
+      return true;
+    }
 
-    cardWrapper.addEventListener("pointermove", (e) => {
-      if (!isDragging || e.pointerId !== pointerId) return;
-      currentX = e.clientX;
-      currentY = e.clientY;
+    function handleDragMove(clientX, clientY, e) {
+      if (!isDragging) return;
+      currentX = clientX;
+      currentY = clientY;
       const diffX = currentX - startX;
       const diffY = currentY - startY;
+
+      // Lock to horizontal gesture if moving sideways
+      if (!isHorizontalGesture && Math.abs(diffX) > 5) {
+        if (Math.abs(diffX) >= Math.abs(diffY)) {
+          isHorizontalGesture = true;
+        }
+      }
+
+      if (isHorizontalGesture && e && e.cancelable) {
+        e.preventDefault();
+      }
 
       const isFutureOrToday = isSameDay(currentDate, systemToday) || currentDate > systemToday;
       let effectiveX = diffX;
       if (diffX > 0 && isFutureOrToday) {
-        effectiveX = diffX * 0.25;
+        effectiveX = diffX * 0.22; // Resistance when attempting to drag into future
       }
 
       const rotateDeg = effectiveX * 0.05;
-      cardWrapper.style.transform = `translate3d(${effectiveX}px, ${diffY * 0.2}px, 0) rotate(${rotateDeg}deg)`;
+      cardWrapper.style.transform = `translate3d(${effectiveX}px, ${diffY * 0.12}px, 0) rotate(${rotateDeg}deg)`;
 
-      const progress = Math.min(Math.abs(effectiveX) / 200, 1);
+      const progress = Math.min(Math.abs(effectiveX) / 180, 1);
       stackLayer1.style.transform = `translateY(${6 - progress * 3}px) rotate(${1.4 - progress * 1.4}deg) scale(${0.99 + progress * 0.01})`;
-    });
+    }
 
-    function endPointerInteraction(e) {
-      if (!isDragging || e.pointerId !== pointerId) return;
+    function handleDragEnd() {
+      if (!isDragging) return;
       isDragging = false;
       cardWrapper.classList.remove("is-dragging");
-      try { cardWrapper.releasePointerCapture(pointerId); } catch(err) {}
 
       const diffX = currentX - startX;
       const diffY = currentY - startY;
       const dist = Math.sqrt(diffX * diffX + diffY * diffY);
       const duration = Date.now() - startTime;
+      const velocity = Math.abs(diffX) / Math.max(duration, 1);
 
       stackLayer1.style.transform = "translateY(6px) rotate(1.4deg) scale(0.99)";
 
-      if (dist < 8 && duration < 280) {
+      // Tap detection (< 10px travel, short duration)
+      if (dist < 10 && duration < 320) {
         cardEl.classList.toggle("is-flipped");
         playTactileSound('paper');
         if (cardEl.classList.contains("is-flipped")) {
-          setTimeout(() => journalTextarea.focus(), 300);
+          setTimeout(() => journalTextarea.focus(), 250);
         }
         cardWrapper.style.transition = "transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)";
         cardWrapper.style.transform = "translate3d(0, 0, 0) rotate(0deg)";
         return;
       }
 
-      const velocity = Math.abs(diffX) / duration;
-      const isSwipe = Math.abs(diffX) > 75 || (velocity > 0.45 && Math.abs(diffX) > 30);
+      // Responsive swipe detection (works reliably with flicks or deliberate drags)
+      const isSwipe = (Math.abs(diffX) > 38 && Math.abs(diffX) > Math.abs(diffY)) || 
+                      (velocity > 0.22 && Math.abs(diffX) > 22);
       const isFutureOrToday = isSameDay(currentDate, systemToday) || currentDate > systemToday;
 
       if (isSwipe) {
         if (diffX < 0) {
+          // Swipe Left -> Older Day (Yesterday)
           animateCardSlide('left', () => {
             const prev = new Date(currentDate);
             prev.setDate(prev.getDate() - 1);
@@ -2542,28 +2570,88 @@
             renderCard(true);
           });
           return;
-        } else if (diffX > 0 && !isFutureOrToday) {
-          animateCardSlide('right', () => {
-            const next = new Date(currentDate);
-            next.setDate(next.getDate() + 1);
-            currentDate = next;
-            renderCard(true);
-          });
-          return;
+        } else if (diffX > 0) {
+          if (!isFutureOrToday) {
+            // Swipe Right -> Newer Day (Tomorrow)
+            animateCardSlide('right', () => {
+              const next = new Date(currentDate);
+              next.setDate(next.getDate() + 1);
+              currentDate = next;
+              renderCard(true);
+            });
+            return;
+          } else {
+            // Already at today: bounce back with haptic feedback
+            triggerHaptic(25);
+          }
         }
       }
 
-      cardWrapper.style.transition = "transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+      // Snap back if threshold not met
+      cardWrapper.style.transition = "transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
       cardWrapper.style.transform = "translate3d(0, 0, 0) rotate(0deg)";
     }
 
-    cardWrapper.addEventListener("pointerup", endPointerInteraction);
-    cardWrapper.addEventListener("pointercancel", endPointerInteraction);
+    // Touch Event Handlers for Mobile (with non-passive touchmove for zero cancellation)
+    cardViewport.addEventListener("touchstart", (e) => {
+      if (e.touches.length === 1) {
+        handleDragStart(e.touches[0].clientX, e.touches[0].clientY, e.target);
+      }
+    }, { passive: true });
+
+    window.addEventListener("touchmove", (e) => {
+      if (isDragging && e.touches.length === 1) {
+        handleDragMove(e.touches[0].clientX, e.touches[0].clientY, e);
+      }
+    }, { passive: false });
+
+    window.addEventListener("touchend", () => {
+      if (isDragging) handleDragEnd();
+    }, { passive: true });
+
+    window.addEventListener("touchcancel", () => {
+      if (isDragging) handleDragEnd();
+    }, { passive: true });
+
+    // Pointer Event Handlers for Desktop Mouse Drag
+    cardViewport.addEventListener("pointerdown", (e) => {
+      if (e.pointerType === 'touch') return; // Handled by touch events on mobile
+      if (handleDragStart(e.clientX, e.clientY, e.target)) {
+        activePointerId = e.pointerId;
+        try { cardWrapper.setPointerCapture(e.pointerId); } catch(err) {}
+      }
+    });
+
+    cardViewport.addEventListener("pointermove", (e) => {
+      if (e.pointerType === 'touch') return;
+      if (isDragging && e.pointerId === activePointerId) {
+        handleDragMove(e.clientX, e.clientY, e);
+      }
+    });
+
+    cardViewport.addEventListener("pointerup", (e) => {
+      if (e.pointerType === 'touch') return;
+      if (isDragging && e.pointerId === activePointerId) {
+        try { cardWrapper.releasePointerCapture(e.pointerId); } catch(err) {}
+        handleDragEnd();
+      }
+    });
+
+    cardViewport.addEventListener("pointercancel", (e) => {
+      if (e.pointerType === 'touch') return;
+      if (isDragging) {
+        try { cardWrapper.releasePointerCapture(e.pointerId); } catch(err) {}
+        handleDragEnd();
+      }
+    });
 
     function animateCardSlide(direction, dateUpdateFn) {
       if (isTransitioning) return;
       isTransitioning = true;
       playTactileSound('deal');
+
+      // Safety timeout so transitions can never permanently freeze
+      const safetyReset = setTimeout(() => { isTransitioning = false; }, 800);
 
       const flyOutX = direction === 'left' ? -500 : 500;
       const flyOutRot = direction === 'left' ? -18 : 18;
@@ -2588,6 +2676,7 @@
             cardWrapper.style.opacity = "1";
             setTimeout(() => {
               isTransitioning = false;
+              clearTimeout(safetyReset);
             }, 450);
           }, 20);
         });
