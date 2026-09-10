@@ -455,6 +455,7 @@
       transform: rotateY(180deg);
       z-index: 1;
       padding: 16px 16px 12px;
+      overflow: visible; /* Prevents format dropdown and tool popovers from being clipped */
     }
 
     .card-meta-top {
@@ -1522,6 +1523,188 @@
       border-color: var(--terracotta);
     }
 
+  
+    
+    /* Custom Themed Dropdown Menus (Where downward arrow ▾ appears) */
+    .custom-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .custom-dropdown-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 11px;
+      border-radius: 8px;
+      border: 1px solid var(--border-card);
+      background: var(--bg-card);
+      color: var(--text-main);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      cursor: pointer;
+      min-width: 135px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      transition: all 0.15s ease;
+    }
+    .custom-dropdown-btn:hover,
+    .custom-dropdown-btn.is-open {
+      border-color: var(--terracotta);
+      background: var(--terracotta-light);
+    }
+    .custom-dropdown-btn.is-open .dropdown-chevron {
+      transform: rotate(180deg);
+    }
+    .dropdown-chevron {
+      color: var(--text-dim);
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .custom-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 4px);
+      right: 0;
+      min-width: 160px;
+      max-height: 230px;
+      overflow-y: auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 10px;
+      box-shadow: 0 12px 28px -5px rgba(0, 0, 0, 0.25), 0 4px 8px -2px rgba(0, 0, 0, 0.08);
+      z-index: 1050;
+      display: none;
+      padding: 4px;
+      animation: dropdownFade 0.14s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .custom-dropdown.is-open .custom-dropdown-menu {
+      display: block;
+    }
+    @keyframes dropdownFade {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .dropdown-item {
+      padding: 8px 11px;
+      font-size: 12px;
+      font-family: var(--font-sans);
+      color: var(--text-main);
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.12s;
+      white-space: nowrap;
+      gap: 12px;
+    }
+    .dropdown-item:hover {
+      background: var(--terracotta-light);
+      color: var(--terracotta);
+    }
+    .dropdown-item.is-selected {
+      background: var(--terracotta-light);
+      color: var(--terracotta);
+      font-weight: 600;
+    }
+    .dropdown-item.is-selected::after {
+      content: '✓';
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--terracotta);
+    }
+
+    /* Decluttered Writing Card Layout */
+    .mood-and-tags-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      flex-wrap: nowrap;
+    }
+
+    /* Universal Theme Dialog Modal */
+    .theme-dialog-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 18px;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+      overflow: hidden;
+      animation: modalSlideIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+    .theme-dialog-header {
+      padding: 16px 20px 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .theme-dialog-icon {
+      font-size: 22px;
+      line-height: 1;
+    }
+    .theme-dialog-title {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    .theme-dialog-body {
+      padding: 6px 20px 14px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+    }
+    .theme-dialog-input {
+      width: 100%;
+      margin-top: 10px;
+      padding: 8px 10px;
+      border: 1px solid var(--border-card);
+      border-radius: 7px;
+      background: var(--bg-canvas);
+      color: var(--text-main);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      outline: none;
+      box-sizing: border-box;
+    }
+    .theme-dialog-footer {
+      padding: 12px 20px;
+      border-top: 1px solid var(--border-card);
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      background: rgba(0,0,0,0.015);
+    }
+
+  
+    /* Format Dropdown: perfectly anchored upward, right-aligned to avoid right edge clipping */
+    #formatDropdown {
+      position: relative;
+    }
+    #formatDropdown .custom-dropdown-menu {
+      bottom: calc(100% + 6px) !important;
+      top: auto !important;
+      right: 0 !important;
+      left: auto !important;
+      min-width: 175px !important;
+      max-width: 220px !important;
+      max-height: 220px !important;
+      overflow-y: auto;
+      border-radius: 12px;
+      padding: 4px;
+      box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.3), 0 4px 10px -2px rgba(0, 0, 0, 0.1);
+      z-index: 1060;
+    }
+    #formatDropdown .dropdown-item {
+      padding: 7px 10px;
+      font-size: 11px;
+    }
+
   </style>
     <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
@@ -1636,21 +1819,7 @@
             </div>
 
             <div class="back-content-wrapper">
-              <!-- Quick Markdown & Text Formatting Toolbar -->
-              <div class="editor-format-bar">
-                <button class="btn-format" data-format="bold" title="Bold (**text**)" type="button"><b>B</b></button>
-                <button class="btn-format" data-format="italic" title="Italic (*text*)" type="button"><i>I</i></button>
-                <button class="btn-format" data-format="heading" title="Heading (### )" type="button">H</button>
-                <button class="btn-format" data-format="check" title="Checklist (- [ ])" type="button">✓</button>
-                <button class="btn-format" data-format="bullet" title="Bullet list (• )" type="button">•</button>
-                <button class="btn-format" data-format="quote" title="Quote (> )" type="button">“</button>
-                <button class="btn-format" data-format="template" title="Structured Templates" type="button">📋 templates</button>
-                <button class="btn-format" id="btnVoiceDictate" data-format="voice" title="Voice Speech-to-Text Dictation" type="button">🎙️ voice</button>
-                <button class="btn-format" data-format="zen" title="Zen Focus Fullscreen" type="button">⛶ zen</button>
-                <button class="btn-format" data-format="time" title="Insert timestamp" type="button">⏱ time</button>
-                <button class="btn-format" data-format="prompt" title="Inspirational prompt" type="button">✦ prompt</button>
-              </div>
-
+              <!-- Decluttered spacious canvas: zero top clutter -->
               <div class="ruled-canvas-container style-ruled" id="canvasContainer">
                 <textarea 
                   class="journal-textarea" 
@@ -1674,9 +1843,9 @@
                 </div>
               </div>
 
+              <!-- Compact single-row mood & tag bar -->
               <div class="card-meta-bottom">
-                <div class="mood-row">
-                  <span class="mood-label">Daily Mood:</span>
+                <div class="mood-and-tags-row">
                   <div class="mood-options" id="moodPicker">
                     <button class="mood-btn" data-mood="party" title="Inspired / Great" type="button">🎉</button>
                     <button class="mood-btn" data-mood="happy" title="Happy / Joyful" type="button">😊</button>
@@ -1685,35 +1854,54 @@
                     <button class="mood-btn" data-mood="sad" title="Sad / Down" type="button">😔</button>
                     <button class="mood-btn" data-mood="angry" title="Frustrated / Stressed" type="button">😤</button>
                   </div>
-                </div>
-
-                <div class="tags-row" id="tagsContainer">
-                  <input 
-                    type="text" 
-                    class="tags-input" 
-                    id="tagsInput" 
-                    placeholder="+ Add tag (press Enter)"
-                  />
+                  <div class="tags-row" id="tagsContainer">
+                    <input 
+                      type="text" 
+                      class="tags-input" 
+                      id="tagsInput" 
+                      placeholder="+ Tag"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
 
+            <!-- Single unified bottom toolbar -->
             <div class="back-footer-actions">
               <div class="action-tools-group">
-                <button class="btn-text-action" id="btnAddPhoto" type="button" title="Attach an image">
+                <button class="btn-text-action" id="btnAddPhoto" type="button" title="Attach photo">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
                     <circle cx="8.5" cy="8.5" r="1.5"/>
                     <polyline points="21 15 16 10 5 21"/>
                   </svg>
-                  <span>+ photo</span>
+                  <span>photo</span>
                 </button>
-                <button class="btn-text-action" id="btnInsertTime" type="button" title="Insert current timestamp">
-                  <span>+ time</span>
+                <button class="btn-text-action" id="btnVoiceDictate" type="button" title="Voice dictation">
+                  <span>🎙️ voice</span>
                 </button>
-                <button class="btn-text-action" id="btnInspirationPrompt" type="button" title="Get writing inspiration">
-                  <span>+ prompt</span>
+                <button class="btn-text-action" id="btnOpenTemplates" type="button" title="Journaling templates">
+                  <span>📋 template</span>
                 </button>
+
+                <!-- Format Dropdown Menu (Opens upward from bottom toolbar) -->
+                <div class="custom-dropdown" id="formatDropdown">
+                  <button class="btn-text-action custom-dropdown-btn" style="min-width: auto; padding: 4px 6px; border: none; background: transparent;" type="button" title="Writing formatting">
+                    <span>✦ format</span>
+                    <svg class="dropdown-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  </button>
+                  <div class="custom-dropdown-menu" style="bottom: calc(100% + 6px); top: auto; right: 0; left: auto;">
+                    <div class="dropdown-item" data-format="bold"><b>Bold</b> <span style="font-size: 10px; color: var(--text-dim);">**text**</span></div>
+                    <div class="dropdown-item" data-format="italic"><i>Italic</i> <span style="font-size: 10px; color: var(--text-dim);">*text*</span></div>
+                    <div class="dropdown-item" data-format="heading">Heading <span style="font-size: 10px; color: var(--text-dim);">###</span></div>
+                    <div class="dropdown-item" data-format="check">Checklist <span style="font-size: 10px; color: var(--text-dim);">- [ ]</span></div>
+                    <div class="dropdown-item" data-format="bullet">Bullet <span style="font-size: 10px; color: var(--text-dim);">•</span></div>
+                    <div class="dropdown-item" data-format="quote">Quote <span style="font-size: 10px; color: var(--text-dim);">&gt;</span></div>
+                    <div class="dropdown-item" data-format="time">Timestamp <span style="font-size: 10px; color: var(--text-dim);">[time]</span></div>
+                    <div class="dropdown-item" data-format="prompt">Inspiration <span style="font-size: 10px; color: var(--text-dim);">✦</span></div>
+                    <div class="dropdown-item" data-format="zen">Zen Focus <span style="font-size: 10px; color: var(--text-dim);">⛶</span></div>
+                  </div>
+                </div>
               </div>
 
               <button class="btn-text-action" id="btnFlipToFront" type="button">
@@ -2229,6 +2417,70 @@
         </button>
         <button class="btn-primary" id="btnInsertPromptToText" style="width: 100%;" type="button">
           Insert into Entry
+        </button>
+      </div>
+    </div>
+  </div>
+
+  
+<!-- Template Picker Modal -->
+  <div class="modal-overlay" id="templateModal">
+    <div class="modal-card" style="max-width: 420px;">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title">Journaling Templates</h2>
+          <p class="modal-subtitle">One-tap structured prompts</p>
+        </div>
+        <button class="btn-modal-close" id="btnCloseTemplate" type="button">Close</button>
+      </div>
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: 8px;">
+        <button class="btn-action-block" data-tmpl="three_good" type="button">
+          <div>
+            <div style="font-weight: 600;">✨ 3 Good Things</div>
+            <div style="font-size: 10px; color: var(--text-muted); font-family: var(--font-sans);">Three positive moments from today</div>
+          </div>
+        </button>
+        <button class="btn-action-block" data-tmpl="reflection" type="button">
+          <div>
+            <div style="font-weight: 600;">🌿 Daily Reflection (High, Low, Learn)</div>
+            <div style="font-size: 10px; color: var(--text-muted); font-family: var(--font-sans);">Highlight, obstacle, and tomorrow's insight</div>
+          </div>
+        </button>
+        <button class="btn-action-block" data-tmpl="intentions" type="button">
+          <div>
+            <div style="font-weight: 600;">☀️ Morning Intentions</div>
+            <div style="font-size: 10px; color: var(--text-muted); font-family: var(--font-sans);">Main goal, gratitude, and mindset</div>
+          </div>
+        </button>
+        <button class="btn-action-block" data-tmpl="winddown" type="button">
+          <div>
+            <div style="font-weight: 600;">🌙 Evening Wind-Down</div>
+            <div style="font-size: 10px; color: var(--text-muted); font-family: var(--font-sans);">Unwind thoughts and clear the mental cache</div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  </div>
+
+  <!-- Universal Theme-Matched Dialog (Replaces native alert / confirm / prompt / errors) -->
+  <div class="modal-overlay" id="themeDialogModal" style="z-index: 10000;">
+    <div class="theme-dialog-box">
+      <div class="theme-dialog-header">
+        <span class="theme-dialog-icon" id="themeDialogIcon">✨</span>
+        <h3 class="theme-dialog-title" id="themeDialogTitle">Notice</h3>
+      </div>
+      <div class="theme-dialog-body">
+        <div id="themeDialogMessage">Message goes here...</div>
+        <input type="text" class="theme-dialog-input" id="themeDialogInput" style="display: none;" />
+      </div>
+      <div class="theme-dialog-footer">
+        <button class="btn-action-block" id="themeDialogCancel" style="padding: 7px 14px; font-size: 12px; display: none;" type="button">
+          Cancel
+        </button>
+        <button class="btn-primary" id="themeDialogConfirm" style="padding: 7px 16px; font-size: 12px;" type="button">
+          OK
         </button>
       </div>
     </div>
@@ -3071,7 +3323,7 @@
     });
 
     // Quick Insert Timestamp
-    btnInsertTime.addEventListener("click", (e) => {
+    if (btnInsertTime) btnInsertTime.addEventListener("click", (e) => {
       e.stopPropagation();
       const now = new Date();
       const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -3094,7 +3346,7 @@
     });
 
     // Writing Prompt Modal
-    btnInspirationPrompt.addEventListener("click", (e) => {
+    if (btnInspirationPrompt) btnInspirationPrompt.addEventListener("click", (e) => {
       e.stopPropagation();
       showRandomPrompt();
       promptModal.classList.add("is-active");
@@ -3106,12 +3358,12 @@
       promptDisplayText.textContent = `"${prompt}"`;
     }
 
-    btnAnotherPrompt.addEventListener("click", () => {
+    if (btnAnotherPrompt) btnAnotherPrompt.addEventListener("click", () => {
       showRandomPrompt();
       playTactileSound('click');
     });
 
-    btnInsertPromptToText.addEventListener("click", () => {
+    if (btnInsertPromptToText) btnInsertPromptToText.addEventListener("click", () => {
       const promptText = promptDisplayText.textContent.replace(/^"|"$/g, '');
       const stamp = `\n\n✦ Prompt: ${promptText}\n`;
       journalTextarea.value += stamp;
@@ -3126,7 +3378,7 @@
       playTactileSound('paper');
     });
 
-    btnClosePrompt.addEventListener("click", () => promptModal.classList.remove("is-active"));
+    if (btnClosePrompt) btnClosePrompt.addEventListener("click", () => promptModal.classList.remove("is-active"));
 
     // Mood picker
     moodButtons.forEach(btn => {
@@ -3414,6 +3666,7 @@
       settingOpenSideSelect.value = appSettings.openSide;
       settingPinToggle.checked = appSettings.pinEnabled;
       pinSetupContainer.style.display = appSettings.pinEnabled ? "block" : "none";
+      syncAllCustomSelectTriggers();
     }
 
     // Setting change listeners
@@ -3480,14 +3733,14 @@
     btnSaveNewPin.addEventListener("click", () => {
       const pin = inputNewPin.value.trim();
       if (pin.length !== 4 || !/^\d{4}$/.test(pin)) {
-        alert("Please enter a valid 4-digit numeric passcode.");
+        themedAlert("Please enter a valid 4-digit numeric passcode.", "Security", "🔒");
         return;
       }
       appSettings.pinHash = btoa("pin_" + pin);
       appSettings.pinEnabled = true;
       saveSettings();
       inputNewPin.value = "";
-      alert("4-digit passcode successfully saved!");
+      themedAlert("4-digit passcode successfully saved!", "Security", "🔒");
     });
 
     btnLockNow.addEventListener("click", () => {
@@ -3534,7 +3787,7 @@
               playTactileSound('paper');
             } else {
               triggerHaptic(100);
-              alert("Incorrect PIN. Please try again.");
+              themedAlert("Incorrect PIN. Please try again.", "Security", "⚠️");
               currentPinInput = "";
               updateLockDots();
             }
@@ -3647,7 +3900,7 @@
         return (journalData[k].text && journalData[k].text.trim()) || journalData[k].photo;
       });
       if (keysWithContent.length === 0) {
-        alert("You don't have any journal entries with text or photos yet!");
+        themedAlert("You don't have any journal entries with text or photos yet!", "Flashback", "📷");
         return;
       }
       const randKey = keysWithContent[Math.floor(Math.random() * keysWithContent.length)];
@@ -3686,11 +3939,11 @@
             saveData();
             renderCard();
             updateStatsView();
-            alert("Journal backup successfully imported!");
+            themedAlert("Journal backup successfully imported!", "Backup & Data", "💾");
             playTactileSound('paper');
           }
         } catch (err) {
-          alert("Error parsing backup JSON file. Ensure it is valid JSON.");
+          themedAlert("Error parsing backup JSON file. Ensure it is valid JSON.", "Import Error", "⚠️");
         }
       };
       reader.readAsText(file);
@@ -3748,17 +4001,17 @@
       playTactileSound('click');
     });
 
-    btnClearAllData.addEventListener("click", () => {
-      const confirmFirst = confirm("Are you sure you want to delete ALL journal entries? This cannot be undone unless you have an exported JSON backup.");
+    btnClearAllData.addEventListener("click", async () => {
+      const confirmFirst = await themedConfirm("Are you sure you want to delete ALL journal entries? This cannot be undone unless you have an exported JSON backup.", "Clear All Entries", true);
       if (confirmFirst) {
-        const confirmSecond = prompt("Type DELETE in capital letters to confirm erasing your journal:");
+        const confirmSecond = await themedPrompt("Type DELETE in capital letters to confirm erasing your journal:", "", "Confirm Erase");
         if (confirmSecond === "DELETE") {
           journalData = {};
           saveData();
           getEntry(systemToday);
           renderCard();
           updateStatsView();
-          alert("All journal data has been erased.");
+          themedAlert("All journal data has been erased.", "Reset Complete", "🗑️");
         }
       }
     });
@@ -3905,7 +4158,7 @@
         updateTopGlanceBar();
 
         if (isManual) {
-          alert("Firebase sync complete! Your journal is harmonized across all devices.");
+          themedAlert("Firebase sync complete! Your journal is harmonized across all devices.", "Cloud Sync", "☁️");
           playTactileSound('paper');
         }
       } catch (err) {
@@ -3920,7 +4173,7 @@
           detail.textContent = `Sync notice: ${err.message}. Local journal preserved.`;
         }
         if (isManual) {
-          alert(`Firebase Sync Error: ${err.message}`);
+          themedAlert(`Firebase Sync Notice: ${err.message}`, "Sync Error", "⚠️");
         }
       } finally {
         syncInProgress = false;
@@ -4109,7 +4362,8 @@
 
       if (btnFirebaseSignOut) {
         btnFirebaseSignOut.addEventListener("click", async () => {
-          if (confirm("Sign out of your Daybook account? Local entries will remain safely on this device.")) {
+          const confirmed = await themedConfirm("Sign out of your Daybook account? Local entries will remain safely on this device.", "Sign Out");
+          if (confirmed) {
             await fbAuth.signOut();
             playTactileSound('click');
           }
@@ -4146,20 +4400,21 @@
       }
 
       if (btnRestorePreSyncSnapshot) {
-        btnRestorePreSyncSnapshot.addEventListener("click", () => {
+        btnRestorePreSyncSnapshot.addEventListener("click", async () => {
           const raw = localStorage.getItem(SYNC_SNAPSHOT_KEY);
           if (!raw) {
-            alert("No pre-sync snapshot found.");
+            themedAlert("No pre-sync snapshot found.", "Snapshot Notice", "ℹ️");
             return;
           }
-          if (confirm("Restore the emergency backup saved right before the last cloud sync?")) {
+          const confirmed = await themedConfirm("Restore the emergency backup saved right before the last cloud sync?", "Restore Backup");
+          if (confirmed) {
             try {
               journalData = JSON.parse(raw);
               saveData();
               renderCard();
-              alert("Emergency pre-sync backup restored!");
+              themedAlert("Emergency pre-sync backup restored!", "Snapshot Restored", "↩️");
             } catch (e) {
-              alert("Failed to restore snapshot.");
+              themedAlert("Failed to restore snapshot.", "Snapshot Error", "⚠️");
             }
           }
         });
@@ -4429,7 +4684,7 @@
     if (btnVoiceDictate) {
       btnVoiceDictate.addEventListener("click", () => {
         if (!recognition) {
-          alert("Speech recognition is not supported in this browser. You can type directly in the textarea.");
+          themedAlert("Speech recognition is not supported in this browser. You can type directly in the textarea.", "Voice Dictation", "🎙️");
           return;
         }
         if (isDictating) {
@@ -4453,6 +4708,15 @@
     if (btnCloseTemplate) {
       btnCloseTemplate.addEventListener("click", () => {
         templateModal.classList.remove("is-active");
+      });
+    }
+
+    const btnOpenTemplates = document.getElementById("btnOpenTemplates");
+    if (btnOpenTemplates) {
+      btnOpenTemplates.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (templateModal) templateModal.classList.add("is-active");
+        playTactileSound("click");
       });
     }
 
@@ -4511,6 +4775,217 @@
     }
 
 
+    
+    // =========================================================================
+    // Themed Dropdown Menus (Wherever there is a downward arrow ▾)
+    // =========================================================================
+    function closeAllCustomDropdowns() {
+      document.querySelectorAll(".custom-dropdown").forEach(dd => {
+        dd.classList.remove("is-open");
+        const btn = dd.querySelector(".custom-dropdown-btn");
+        if (btn) btn.classList.remove("is-open");
+      });
+    }
+
+    // Global click listener to close open dropdowns when tapping outside
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".custom-dropdown")) {
+        closeAllCustomDropdowns();
+      }
+    });
+
+    function initCustomDropdowns() {
+      // 1. Transform all native <select> elements into custom themed dropdowns
+      document.querySelectorAll("select").forEach(sel => {
+        sel.style.display = "none";
+        const parent = sel.parentElement;
+        if (!parent) return;
+
+        let ddWrapper = parent.querySelector(`.custom-dropdown[data-select-id="${sel.id}"]`);
+        if (!ddWrapper) {
+          ddWrapper = document.createElement("div");
+          ddWrapper.className = "custom-dropdown";
+          ddWrapper.dataset.selectId = sel.id;
+
+          const selectedOpt = sel.options[sel.selectedIndex] || sel.options[0];
+          const label = selectedOpt ? selectedOpt.text : "";
+
+          // Dropdown trigger button (has downward chevron ▾)
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "custom-dropdown-btn";
+          btn.innerHTML = `
+            <span class="dropdown-label">${escapeHtml(label)}</span>
+            <svg class="dropdown-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          `;
+
+          // Dropdown menu (unfolds directly below)
+          const menu = document.createElement("div");
+          menu.className = "custom-dropdown-menu";
+
+          Array.from(sel.options).forEach(opt => {
+            const item = document.createElement("div");
+            item.className = "dropdown-item" + (opt.value === sel.value ? " is-selected" : "");
+            item.dataset.value = opt.value;
+            item.textContent = opt.text;
+
+            item.addEventListener("click", (e) => {
+              e.stopPropagation();
+              sel.value = opt.value;
+              btn.querySelector(".dropdown-label").textContent = opt.text;
+              menu.querySelectorAll(".dropdown-item").forEach(i => i.classList.remove("is-selected"));
+              item.classList.add("is-selected");
+              closeAllCustomDropdowns();
+              sel.dispatchEvent(new Event("change", { bubbles: true }));
+              playTactileSound("click");
+            });
+
+            menu.appendChild(item);
+          });
+
+          btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const isOpen = ddWrapper.classList.contains("is-open");
+            closeAllCustomDropdowns();
+            if (!isOpen) {
+              ddWrapper.classList.add("is-open");
+              btn.classList.add("is-open");
+              playTactileSound("click");
+            }
+          });
+
+          ddWrapper.appendChild(btn);
+          ddWrapper.appendChild(menu);
+          parent.appendChild(ddWrapper);
+        }
+      });
+
+      // 2. Setup Format Dropdown on writing canvas
+      const formatDropdown = document.getElementById("formatDropdown");
+      if (formatDropdown) {
+        const formatBtn = formatDropdown.querySelector(".custom-dropdown-btn");
+        const formatMenu = formatDropdown.querySelector(".custom-dropdown-menu");
+
+        if (formatBtn && formatMenu) {
+          formatBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const isOpen = formatDropdown.classList.contains("is-open");
+            closeAllCustomDropdowns();
+            if (!isOpen) {
+              formatDropdown.classList.add("is-open");
+              formatBtn.classList.add("is-open");
+              playTactileSound("click");
+            }
+          });
+
+          formatMenu.querySelectorAll(".dropdown-item").forEach(item => {
+            item.addEventListener("click", (e) => {
+              e.stopPropagation();
+              const fmt = item.dataset.format;
+              closeAllCustomDropdowns();
+              applyTextFormat(fmt);
+            });
+          });
+        }
+      }
+    }
+
+    function syncAllCustomSelectTriggers() {
+      document.querySelectorAll("select").forEach(sel => {
+        const parent = sel.parentElement;
+        if (!parent) return;
+        const ddWrapper = parent.querySelector(`.custom-dropdown[data-select-id="${sel.id}"]`);
+        if (ddWrapper) {
+          const selectedOpt = sel.options[sel.selectedIndex] || sel.options[0];
+          const labelSpan = ddWrapper.querySelector(".dropdown-label");
+          if (labelSpan && selectedOpt) labelSpan.textContent = selectedOpt.text;
+          const menu = ddWrapper.querySelector(".custom-dropdown-menu");
+          if (menu) {
+            menu.querySelectorAll(".dropdown-item").forEach(i => {
+              if (i.dataset.value === sel.value) i.classList.add("is-selected");
+              else i.classList.remove("is-selected");
+            });
+          }
+        }
+      });
+    }
+
+    // Universal Themed Dialog Modal (Replaces native browser popups & errors)
+    function showThemedDialog({ title = "Daybook", message = "", icon = "✨", type = "alert", defaultValue = "", isDanger = false }) {
+      return new Promise((resolve) => {
+        const modal = document.getElementById("themeDialogModal");
+        const titleEl = document.getElementById("themeDialogTitle");
+        const iconEl = document.getElementById("themeDialogIcon");
+        const msgEl = document.getElementById("themeDialogMessage");
+        const inputEl = document.getElementById("themeDialogInput");
+        const btnCancel = document.getElementById("themeDialogCancel");
+        const btnConfirm = document.getElementById("themeDialogConfirm");
+
+        if (!modal) {
+          if (type === "confirm") resolve(window.confirm(message));
+          else if (type === "prompt") resolve(window.prompt(message, defaultValue));
+          else { window.alert(message); resolve(true); }
+          return;
+        }
+
+        titleEl.textContent = title;
+        iconEl.textContent = icon;
+        msgEl.textContent = message;
+
+        if (type === "prompt") {
+          inputEl.style.display = "block";
+          inputEl.value = defaultValue;
+          setTimeout(() => inputEl.focus(), 150);
+        } else {
+          inputEl.style.display = "none";
+        }
+
+        if (type === "alert") {
+          btnCancel.style.display = "none";
+          btnConfirm.textContent = "OK";
+          btnConfirm.className = "btn-primary";
+        } else if (type === "confirm") {
+          btnCancel.style.display = "inline-flex";
+          btnConfirm.textContent = isDanger ? "Delete" : "Confirm";
+          btnConfirm.className = isDanger ? "btn-primary danger" : "btn-primary";
+        } else if (type === "prompt") {
+          btnCancel.style.display = "inline-flex";
+          btnConfirm.textContent = "OK";
+          btnConfirm.className = "btn-primary";
+        }
+
+        modal.classList.add("is-active");
+        playTactileSound("click");
+
+        const cleanup = () => {
+          modal.classList.remove("is-active");
+          btnConfirm.onclick = null;
+          btnCancel.onclick = null;
+        };
+
+        btnConfirm.onclick = () => {
+          cleanup();
+          playTactileSound("click");
+          if (type === "prompt") resolve(inputEl.value);
+          else resolve(true);
+        };
+
+        btnCancel.onclick = () => {
+          cleanup();
+          playTactileSound("click");
+          if (type === "prompt") resolve(null);
+          else resolve(false);
+        };
+      });
+    }
+
+    window.themedAlert = (msg, title = "Daybook", icon = "ℹ️") => showThemedDialog({ title, message: msg, icon, type: "alert" });
+    window.themedConfirm = (msg, title = "Confirmation", isDanger = false) => showThemedDialog({ title, message: msg, icon: isDanger ? "⚠️" : "❓", type: "confirm", isDanger });
+    window.themedPrompt = (msg, def = "", title = "Daybook") => showThemedDialog({ title, message: msg, icon: "✏️", type: "prompt", defaultValue: def });
+
+
     // App Initialization
     loadSyncSettings();
     loadSettings();
@@ -4525,49 +5000,13 @@
     renderCard();
     renderWeekStrip();
     updateTopGlanceBar();
+    initCustomDropdowns();
+    syncAllCustomSelectTriggers();
     setupFirebaseAuth();
 
     if (appSettings.pinEnabled && appSettings.pinHash) {
       showLockScreen();
     }
   </script>
-  <!-- Template Picker Modal -->
-  <div class="modal-overlay" id="templateModal">
-    <div class="modal-card" style="max-width: 420px;">
-      <div class="modal-header">
-        <div>
-          <h2 class="modal-title">Journaling Templates</h2>
-          <p class="modal-subtitle">One-tap structured prompts</p>
-        </div>
-        <button class="btn-modal-close" id="btnCloseTemplate" type="button">Close</button>
-      </div>
-      <div class="modal-body" style="display: flex; flex-direction: column; gap: 8px;">
-        <button class="btn-action-block" data-tmpl="three_good" type="button">
-          <div>
-            <div style="font-weight: 600;">✨ 3 Good Things</div>
-            <div style="font-size: 10px; color: var(--text-muted); font-family: var(--font-sans);">Three positive moments from today</div>
-          </div>
-        </button>
-        <button class="btn-action-block" data-tmpl="reflection" type="button">
-          <div>
-            <div style="font-weight: 600;">🌿 Daily Reflection (High, Low, Learn)</div>
-            <div style="font-size: 10px; color: var(--text-muted); font-family: var(--font-sans);">Highlight, obstacle, and tomorrow's insight</div>
-          </div>
-        </button>
-        <button class="btn-action-block" data-tmpl="intentions" type="button">
-          <div>
-            <div style="font-weight: 600;">☀️ Morning Intentions</div>
-            <div style="font-size: 10px; color: var(--text-muted); font-family: var(--font-sans);">Main goal, gratitude, and mindset</div>
-          </div>
-        </button>
-        <button class="btn-action-block" data-tmpl="winddown" type="button">
-          <div>
-            <div style="font-weight: 600;">🌙 Evening Wind-Down</div>
-            <div style="font-size: 10px; color: var(--text-muted); font-family: var(--font-sans);">Unwind thoughts and clear the mental cache</div>
-          </div>
-        </button>
-      </div>
-    </div>
-  </div>
 </body>
 </html>
