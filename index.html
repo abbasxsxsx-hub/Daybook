@@ -1488,6 +1488,40 @@
       .journal-textarea { overflow: visible; height: auto; }
     }
 
+  
+    /* Zen Focus Fullscreen Mode */
+    body.zen-mode header.app-header,
+    body.zen-mode .top-glance-bar,
+    body.zen-mode .bottom-navigation,
+    body.zen-mode .card-footer-front,
+    body.zen-mode .back-footer-actions,
+    body.zen-mode .card-meta-bottom {
+      display: none !important;
+    }
+    body.zen-mode main.stage-container {
+      padding: 0;
+      max-width: 100%;
+    }
+    body.zen-mode .journal-card-wrapper {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100vw; height: 100dvh;
+      z-index: 50;
+      border-radius: 0;
+    }
+    body.zen-mode .journal-card,
+    body.zen-mode .card-face {
+      border-radius: 0;
+      border: none;
+      box-shadow: none;
+      padding: 20px 24px;
+    }
+    .btn-format.is-active {
+      background: var(--terracotta);
+      color: #fff;
+      border-color: var(--terracotta);
+    }
+
   </style>
     <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
@@ -1610,6 +1644,9 @@
                 <button class="btn-format" data-format="check" title="Checklist (- [ ])" type="button">✓</button>
                 <button class="btn-format" data-format="bullet" title="Bullet list (• )" type="button">•</button>
                 <button class="btn-format" data-format="quote" title="Quote (> )" type="button">“</button>
+                <button class="btn-format" data-format="template" title="Structured Templates" type="button">📋 templates</button>
+                <button class="btn-format" id="btnVoiceDictate" data-format="voice" title="Voice Speech-to-Text Dictation" type="button">🎙️ voice</button>
+                <button class="btn-format" data-format="zen" title="Zen Focus Fullscreen" type="button">⛶ zen</button>
                 <button class="btn-format" data-format="time" title="Insert timestamp" type="button">⏱ time</button>
                 <button class="btn-format" data-format="prompt" title="Inspirational prompt" type="button">✦ prompt</button>
               </div>
@@ -1641,12 +1678,12 @@
                 <div class="mood-row">
                   <span class="mood-label">Daily Mood:</span>
                   <div class="mood-options" id="moodPicker">
-                    <button class="mood-btn" data-mood="calm" title="Calm" type="button">😌</button>
-                    <button class="mood-btn" data-mood="happy" title="Happy" type="button">😊</button>
-                    <button class="mood-btn" data-mood="neutral" title="Neutral" type="button">😐</button>
-                    <button class="mood-btn" data-mood="sad" title="Sad" type="button">😔</button>
-                    <button class="mood-btn" data-mood="angry" title="Frustrated" type="button">😤</button>
                     <button class="mood-btn" data-mood="party" title="Inspired / Great" type="button">🎉</button>
+                    <button class="mood-btn" data-mood="happy" title="Happy / Joyful" type="button">😊</button>
+                    <button class="mood-btn" data-mood="calm" title="Calm / Peaceful" type="button">😌</button>
+                    <button class="mood-btn" data-mood="neutral" title="Neutral / Okay" type="button">😐</button>
+                    <button class="mood-btn" data-mood="sad" title="Sad / Down" type="button">😔</button>
+                    <button class="mood-btn" data-mood="angry" title="Frustrated / Stressed" type="button">😤</button>
                   </div>
                 </div>
 
@@ -1897,15 +1934,36 @@
 
           <div class="setting-item">
             <div class="setting-info">
-              <div class="setting-title">Focus Ambient Sound</div>
-              <div class="setting-desc">Offline synthesized background ambience while writing</div>
+              <div class="setting-title">Tactile Sound Volume</div>
+              <div class="setting-desc" id="tactileVolLabel">Volume: 80%</div>
+            </div>
+            <div class="setting-control" style="width: 120px;">
+              <input type="range" id="settingTactileVol" min="0" max="100" value="80" style="width: 100%; accent-color: var(--terracotta);" />
+            </div>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-info">
+              <div class="setting-title">Focus Ambient Soundscape</div>
+              <div class="setting-desc">Procedurally generated soothing background sound</div>
             </div>
             <div class="setting-control">
               <select id="settingAmbientSelect">
                 <option value="none" selected>Off (Silent)</option>
-                <option value="rain">🌧️ Gentle Rain</option>
-                <option value="waves">🌊 Ocean Waves</option>
+                <option value="rain">🌧️ Gentle Rainfall</option>
+                <option value="waves">🌊 Ocean Surf</option>
+                <option value="fire">🪵 Crackling Campfire</option>
               </select>
+            </div>
+          </div>
+
+          <div class="setting-item" id="ambientVolRow" style="display: none;">
+            <div class="setting-info">
+              <div class="setting-title">Ambient Sound Volume</div>
+              <div class="setting-desc" id="ambientVolLabel">Volume: 65%</div>
+            </div>
+            <div class="setting-control" style="width: 120px;">
+              <input type="range" id="settingAmbientVol" min="0" max="100" value="65" style="width: 100%; accent-color: var(--terracotta);" />
             </div>
           </div>
 
@@ -2097,9 +2155,9 @@
         <div class="index-filters" id="indexFilterChips">
           <button class="filter-chip is-active" data-filter="all" type="button">All</button>
           <button class="filter-chip" data-filter="photo" type="button">📷 Photos</button>
-          <button class="filter-chip" data-filter="calm" type="button">😌 Calm</button>
-          <button class="filter-chip" data-filter="happy" type="button">😊 Happy</button>
           <button class="filter-chip" data-filter="party" type="button">🎉 Great</button>
+          <button class="filter-chip" data-filter="happy" type="button">😊 Happy</button>
+          <button class="filter-chip" data-filter="calm" type="button">😌 Calm</button>
           <button class="filter-chip" data-filter="neutral" type="button">😐 Neutral</button>
           <button class="filter-chip" data-filter="sad" type="button">😔 Sad</button>
           <button class="filter-chip" data-filter="angry" type="button">😤 Frustrated</button>
@@ -2265,9 +2323,11 @@
       }
     }
 
+    let tactileVolume = 0.8; // Default 80% volume
+
     function playTactileSound(type = 'paper') {
       triggerHaptic(type === 'paper' ? 14 : 8);
-      if (!appSettings.soundEnabled || !audioCtx) return;
+      if (!appSettings.soundEnabled || !audioCtx || tactileVolume <= 0) return;
       try {
         if (audioCtx.state === 'suspended') audioCtx.resume();
         const osc = audioCtx.createOscillator();
@@ -2275,29 +2335,34 @@
         osc.connect(gain);
         gain.connect(audioCtx.destination);
         const now = audioCtx.currentTime;
+        const vol = Math.max(0, Math.min(1, tactileVolume));
+
         if (type === 'paper') {
+          // Crisp mechanical paper rustle
           osc.type = 'triangle';
-          osc.frequency.setValueAtTime(150, now);
-          osc.frequency.exponentialRampToValueAtTime(60, now + 0.09);
-          gain.gain.setValueAtTime(0.05, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+          osc.frequency.setValueAtTime(260, now);
+          osc.frequency.exponentialRampToValueAtTime(70, now + 0.11);
+          gain.gain.setValueAtTime(0.35 * vol, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.11);
           osc.start(now);
-          osc.stop(now + 0.09);
+          osc.stop(now + 0.11);
         } else if (type === 'deal') {
+          // Satisfying card deck sliding / deal
           osc.type = 'sine';
-          osc.frequency.setValueAtTime(280, now);
-          osc.frequency.exponentialRampToValueAtTime(110, now + 0.12);
-          gain.gain.setValueAtTime(0.06, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+          osc.frequency.setValueAtTime(360, now);
+          osc.frequency.exponentialRampToValueAtTime(140, now + 0.13);
+          gain.gain.setValueAtTime(0.40 * vol, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.13);
           osc.start(now);
-          osc.stop(now + 0.12);
+          osc.stop(now + 0.13);
         } else {
+          // Soft mechanical woodblock tap
           osc.type = 'sine';
-          osc.frequency.setValueAtTime(380, now);
-          gain.gain.setValueAtTime(0.03, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+          osc.frequency.setValueAtTime(440, now);
+          gain.gain.setValueAtTime(0.28 * vol, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
           osc.start(now);
-          osc.stop(now + 0.04);
+          osc.stop(now + 0.05);
         }
       } catch (e) {}
     }
@@ -3538,9 +3603,9 @@
       if (moodChartWrap) {
         moodChartWrap.innerHTML = "";
         const moodLabels = {
-          calm: "😌 Calm",
-          happy: "😊 Happy",
           party: "🎉 Great",
+          happy: "😊 Happy",
+          calm: "😌 Calm",
           neutral: "😐 Neutral",
           sad: "😔 Sad",
           angry: "😤 Frustrated"
@@ -4192,10 +4257,21 @@
     // ==========================================
     let ambientNode = null;
     let ambientGain = null;
+    let ambientVolume = 0.65;
+    let currentAmbientType = "none";
 
     function startAmbientSound(type) {
       stopAmbientSound();
-      if (!type || type === "none" || !audioCtx) return;
+      currentAmbientType = type;
+      if (!type || type === "none" || !audioCtx || ambientVolume <= 0) {
+        const volRow = document.getElementById("ambientVolRow");
+        if (volRow) volRow.style.display = "none";
+        return;
+      }
+
+      const volRow = document.getElementById("ambientVolRow");
+      if (volRow) volRow.style.display = "flex";
+
       try {
         if (audioCtx.state === "suspended") audioCtx.resume();
 
@@ -4214,22 +4290,35 @@
         whiteNoise.loop = true;
 
         const filter = audioCtx.createBiquadFilter();
+        const now = audioCtx.currentTime;
+
         if (type === "rain") {
           filter.type = "lowpass";
-          filter.frequency.setValueAtTime(900, audioCtx.currentTime);
-        } else {
+          filter.frequency.setValueAtTime(1200, now);
+        } else if (type === "waves") {
           filter.type = "bandpass";
-          filter.frequency.setValueAtTime(450, audioCtx.currentTime);
+          filter.frequency.setValueAtTime(480, now);
+          // Modulate wave swell
+          const lfo = audioCtx.createOscillator();
+          const lfoGain = audioCtx.createGain();
+          lfo.frequency.setValueAtTime(0.2, now);
+          lfoGain.gain.setValueAtTime(220, now);
+          lfo.connect(filter.frequency);
+          lfo.start(now);
+        } else {
+          // Campfire crackle
+          filter.type = "lowpass";
+          filter.frequency.setValueAtTime(800, now);
         }
 
         ambientGain = audioCtx.createGain();
-        ambientGain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+        ambientGain.gain.setValueAtTime(0.32 * ambientVolume, now);
 
         whiteNoise.connect(filter);
         filter.connect(ambientGain);
         ambientGain.connect(audioCtx.destination);
 
-        whiteNoise.start();
+        whiteNoise.start(now);
         ambientNode = whiteNoise;
       } catch (e) {
         console.warn("Ambient sound notice:", e);
@@ -4250,7 +4339,170 @@
       });
     }
 
-    // Print / PDF Button
+    // Volume Sliders
+    const settingTactileVol = document.getElementById("settingTactileVol");
+    const tactileVolLabel = document.getElementById("tactileVolLabel");
+    if (settingTactileVol && tactileVolLabel) {
+      settingTactileVol.addEventListener("input", () => {
+        tactileVolume = parseInt(settingTactileVol.value, 10) / 100;
+        tactileVolLabel.textContent = `Volume: ${settingTactileVol.value}%`;
+      });
+      settingTactileVol.addEventListener("change", () => {
+        playTactileSound('paper'); // Live audio preview
+      });
+    }
+
+    const settingAmbientVol = document.getElementById("settingAmbientVol");
+    const ambientVolLabel = document.getElementById("ambientVolLabel");
+    if (settingAmbientVol && ambientVolLabel) {
+      settingAmbientVol.addEventListener("input", () => {
+        ambientVolume = parseInt(settingAmbientVol.value, 10) / 100;
+        ambientVolLabel.textContent = `Volume: ${settingAmbientVol.value}%`;
+        if (ambientGain && audioCtx) {
+          ambientGain.gain.setValueAtTime(0.32 * ambientVolume, audioCtx.currentTime);
+        }
+      });
+    }
+
+    // ==========================================
+    // Voice-to-Text Dictation
+    // ==========================================
+    const btnVoiceDictate = document.getElementById("btnVoiceDictate");
+    let recognition = null;
+    let isDictating = false;
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      try {
+        recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = "en-US";
+
+        recognition.onstart = () => {
+          isDictating = true;
+          if (btnVoiceDictate) {
+            btnVoiceDictate.classList.add("is-active");
+            btnVoiceDictate.textContent = "🔴 listening...";
+          }
+          triggerHaptic(25);
+        };
+
+        recognition.onresult = (event) => {
+          const transcript = event.results[0][0].transcript;
+          if (transcript) {
+            const start = journalTextarea.selectionStart;
+            const end = journalTextarea.selectionEnd;
+            const val = journalTextarea.value;
+            const insertText = (val.length > 0 && !val.endsWith(' ') ? ' ' : '') + transcript;
+            journalTextarea.value = val.substring(0, start) + insertText + val.substring(end);
+            journalTextarea.focus();
+            journalTextarea.selectionStart = journalTextarea.selectionEnd = start + insertText.length;
+
+            const entry = getEntry(currentDate);
+            entry.text = journalTextarea.value;
+            entry.updatedAt = new Date().toISOString();
+            updateWordCount(entry.text);
+            saveData();
+            playTactileSound('paper');
+          }
+        };
+
+        recognition.onerror = () => {
+          isDictating = false;
+          if (btnVoiceDictate) {
+            btnVoiceDictate.classList.remove("is-active");
+            btnVoiceDictate.textContent = "🎙️ voice";
+          }
+        };
+
+        recognition.onend = () => {
+          isDictating = false;
+          if (btnVoiceDictate) {
+            btnVoiceDictate.classList.remove("is-active");
+            btnVoiceDictate.textContent = "🎙️ voice";
+          }
+        };
+      } catch (e) {}
+    }
+
+    if (btnVoiceDictate) {
+      btnVoiceDictate.addEventListener("click", () => {
+        if (!recognition) {
+          alert("Speech recognition is not supported in this browser. You can type directly in the textarea.");
+          return;
+        }
+        if (isDictating) {
+          recognition.stop();
+        } else {
+          try {
+            recognition.start();
+          } catch (e) {
+            recognition.stop();
+          }
+        }
+      });
+    }
+
+    // ==========================================
+    // Structured Journaling Templates
+    // ==========================================
+    const templateModal = document.getElementById("templateModal");
+    const btnCloseTemplate = document.getElementById("btnCloseTemplate");
+
+    if (btnCloseTemplate) {
+      btnCloseTemplate.addEventListener("click", () => {
+        templateModal.classList.remove("is-active");
+      });
+    }
+
+    document.querySelectorAll("[data-tmpl]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const tmpl = btn.dataset.tmpl;
+        let templateText = "";
+
+        if (tmpl === "three_good") {
+          templateText = "\n\n### ✨ 3 Good Things Today\n1. \n2. \n3. \n";
+        } else if (tmpl === "reflection") {
+          templateText = "\n\n### 🌿 Daily Reflection\n- **Highlight:** \n- **Challenge:** \n- **Tomorrow's Focus:** \n";
+        } else if (tmpl === "intentions") {
+          templateText = "\n\n### ☀️ Morning Intentions\n- **Top Priority:** \n- **Grateful For:** \n- **Mindset:** \n";
+        } else if (tmpl === "winddown") {
+          templateText = "\n\n### 🌙 Evening Wind-Down\n- **Wins today:** \n- **Lessons learned:** \n- **Peaceful moment:** \n";
+        }
+
+        journalTextarea.value += templateText;
+        journalTextarea.focus();
+        const entry = getEntry(currentDate);
+        entry.text = journalTextarea.value;
+        entry.updatedAt = new Date().toISOString();
+        updateWordCount(entry.text);
+        saveData();
+
+        templateModal.classList.remove("is-active");
+        playTactileSound('paper');
+      });
+    });
+
+    // Update applyTextFormat to handle 'template' and 'zen'
+    const origApplyFormat = applyTextFormat;
+    applyTextFormat = function(formatType) {
+      if (formatType === "template") {
+        if (templateModal) templateModal.classList.add("is-active");
+        playTactileSound('click');
+        return;
+      }
+      if (formatType === "zen") {
+        document.body.classList.toggle("zen-mode");
+        const zenBtn = document.querySelector('.btn-format[data-format="zen"]');
+        if (zenBtn) zenBtn.classList.toggle("is-active");
+        playTactileSound('click');
+        return;
+      }
+      if (formatType === "voice") return; // Handled by btnVoiceDictate
+      origApplyFormat(formatType);
+    };
+
     const btnPrintJournal = document.getElementById("btnPrintJournal");
     if (btnPrintJournal) {
       btnPrintJournal.addEventListener("click", () => {
@@ -4279,5 +4531,43 @@
       showLockScreen();
     }
   </script>
+  <!-- Template Picker Modal -->
+  <div class="modal-overlay" id="templateModal">
+    <div class="modal-card" style="max-width: 420px;">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title">Journaling Templates</h2>
+          <p class="modal-subtitle">One-tap structured prompts</p>
+        </div>
+        <button class="btn-modal-close" id="btnCloseTemplate" type="button">Close</button>
+      </div>
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: 8px;">
+        <button class="btn-action-block" data-tmpl="three_good" type="button">
+          <div>
+            <div style="font-weight: 600;">✨ 3 Good Things</div>
+            <div style="font-size: 10px; color: var(--text-muted); font-family: var(--font-sans);">Three positive moments from today</div>
+          </div>
+        </button>
+        <button class="btn-action-block" data-tmpl="reflection" type="button">
+          <div>
+            <div style="font-weight: 600;">🌿 Daily Reflection (High, Low, Learn)</div>
+            <div style="font-size: 10px; color: var(--text-muted); font-family: var(--font-sans);">Highlight, obstacle, and tomorrow's insight</div>
+          </div>
+        </button>
+        <button class="btn-action-block" data-tmpl="intentions" type="button">
+          <div>
+            <div style="font-weight: 600;">☀️ Morning Intentions</div>
+            <div style="font-size: 10px; color: var(--text-muted); font-family: var(--font-sans);">Main goal, gratitude, and mindset</div>
+          </div>
+        </button>
+        <button class="btn-action-block" data-tmpl="winddown" type="button">
+          <div>
+            <div style="font-weight: 600;">🌙 Evening Wind-Down</div>
+            <div style="font-size: 10px; color: var(--text-muted); font-family: var(--font-sans);">Unwind thoughts and clear the mental cache</div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
